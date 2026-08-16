@@ -102,6 +102,9 @@ The system consists of **4 core modules** orchestrated by an FSM controller:
 
 ## 🚀 Quick Start for Team Members
 
+> [!CAUTION]
+> **MANDATORY WORKFLOW:** The `main` branch is protected. You **cannot** push code directly to `main`. GitHub will block your push. You must *always* create a new branch, push your branch, and open a **Pull Request (PR)** for review.
+
 ### Prerequisites
 
 Make sure you have these installed:
@@ -159,13 +162,15 @@ git commit -m "feat: add 8x8 systolic array testbench"
 git push origin feature/<your-name>/<what-you-are-working-on>
 ```
 
-### Step 4 — Open a Pull Request
+### Step 4 — Open a Pull Request (MANDATORY)
 
-1. Go to the repo on GitHub
-2. Click **"Compare & pull request"** (banner appears after push)
-3. Write a description of your changes
-4. Request review from a teammate
-5. Merge after approval ✅
+Because `main` is protected, you cannot merge your own code directly. You must ask for a review.
+
+1. Go to the repo on GitHub.
+2. Click **"Compare & pull request"** (a green banner appears after you push).
+3. Write a description of what you changed and *why*.
+4. **Important:** Request a review from the repository admin (Adarsh).
+5. **Wait for Approval:** You must wait for the admin to review your code, approve it, and click merge. Once merged, your changes will appear in `main`.
 
 ---
 
@@ -181,7 +186,9 @@ If you don't have Git installed or aren't comfortable with the command line, you
 5. Scroll down to **"Commit changes..."**.
 6. Write a short description (e.g., "Add my name to team list").
 7. Select **"Create a new branch for this commit and start a pull request"**.
-8. Click **"Propose changes"** and then **"Create pull request"**.
+8. Click **"Propose changes"**.
+9. On the next screen, click **"Create pull request"**.
+10. **Wait for Approval:** An administrator must review and approve your Pull Request before your changes are merged into the main project.
 
 ### Uploading a File (e.g., adding a new document or image)
 1. Navigate to the folder where you want to add the file.
@@ -190,7 +197,9 @@ If you don't have Git installed or aren't comfortable with the command line, you
 4. Scroll down to **"Commit changes..."**.
 5. Write a short description (e.g., "Upload final presentation PDF").
 6. Select **"Create a new branch for this commit and start a pull request"**.
-7. Click **"Propose changes"** and then **"Create pull request"**.
+7. Click **"Propose changes"**.
+8. On the next screen, click **"Create pull request"**.
+9. **Wait for Approval:** Just like editing a file, an administrator must approve your upload before it appears in the main project.
 
 ---
 
@@ -224,10 +233,10 @@ main (protected — always stable)
 ### Rules
 
 > [!IMPORTANT]
-> - **Never push directly to `main`** — always use a Pull Request
-> - **Always pull before you push** — `git pull origin develop` before starting work
-> - **One feature per branch** — keep branches small and focused
-> - **Write descriptive commit messages** — your teammates will thank you
+> - **Never push directly to `main`** — GitHub will actively block it. You must use a branch and a Pull Request.
+> - **Always pull before you push** — `git checkout main` then `git pull origin main` before starting new work.
+> - **One feature per branch** — keep branches small and focused.
+> - **Write descriptive commit messages** — your teammates need to know what you changed.
 
 ### Useful Git Commands
 
