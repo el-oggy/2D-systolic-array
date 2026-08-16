@@ -101,16 +101,14 @@ Make sure you have these installed:
 
 ```bash
 # Clone via HTTPS (easiest)
-git clone https://github.com/<your-username>/Edge-AI-Hackathon.git
+git clone https://github.com/el-oggy/2D-systolic-array-.git
 
 # OR clone via SSH (if you have SSH keys set up)
-git clone git@github.com:<your-username>/Edge-AI-Hackathon.git
+git clone git@github.com:el-oggy/2D-systolic-array-.git
 
 # Enter the project
-cd Edge-AI-Hackathon
+cd 2D-systolic-array-
 ```
-
-> ⚠️ **Replace `<your-username>` with the actual GitHub username/org after pushing.**
 
 ### Step 2 — Create Your Working Branch
 
@@ -219,7 +217,7 @@ git stash pop    # get it back
 ## 📁 Project Structure
 
 ```
-Edge-AI-Hackathon/
+2D-systolic-array-/
 │
 ├── 📄 README.md                          ← You are here
 ├── 📄 .gitignore                         ← Git ignore rules
