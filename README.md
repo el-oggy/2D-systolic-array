@@ -231,10 +231,13 @@ git stash pop    # get it back
 │   ├── 6_controller.v                    ← FSM Controller
 │   ├── 7_systolic_top.v                  ← Top-Level Wrapper
 │   ├── 8_systolic_4x4_tb.v              ← Full 4×4 System Testbench
+│   ├── EDGE-AI_ABSTRACT_FILLED.docx      ← Project Abstract
+│   ├── Systolic_Array_Code_Explanation.pdf ← Code Explanation
 │   ├── block_diagram.png                 ← System Architecture Diagram
 │   └── flowchart.png                     ← FSM Flowchart
 │
 ├── 📂 assets/                            ← Hackathon Documents
+│   ├── 2D Systolic array.pdf             ← Systolic Array Docs
 │   ├── EDGE-AI_2026_PROBLEM_STATEMET.docx
 │   ├── EDGE-AI_ABSTRACT.docx
 │   └── Edge_AI_Hackathon_Brochure.pdf
