@@ -45,6 +45,21 @@ A **2D Systolic Array** hardware accelerator designed for **matrix multiplicatio
 | 📐 **8-bit Signed** | Configurable `DATA_WIDTH`, default 8-bit for INT8 inference |
 | ✅ **Verified** | Testbenches for PE, 2×2 array, and full 4×4 system |
 
+### 🌍 Applications
+
+This architecture is highly versatile and accelerates matrix operations in several domains:
+*   **Deep Learning Inference:** Real-time, on-device AI inference without cloud dependency.
+*   **Digital Signal Processing (DSP):** FIR filtering, FFT, and radar systems.
+*   **Scientific Computing:** Matrix solvers and simulations on embedded platforms.
+*   **Image & Video Processing:** 2D spatial convolutions for real-time video processing.
+*   **5G/6G & Massive MIMO:** Accelerating beamforming and signal detection algorithms.
+
+### 💎 Value Proposition
+
+*   **Optimal Data Reuse:** Each input is read ONCE from memory and reused N times through the PE chain, resulting in an N× bandwidth reduction.
+*   **Architectural Novelty:** Utilizes a unique B-matrix transposition technique prior to skewing, allowing complete reuse of a single shift-register buffer module for both horizontal and vertical data streams.
+*   **Zero Wasted Cycles:** The precise 3N-1 cycle state machine guarantees maximum PE utilization.
+
 ---
 
 ## 🏗️ Architecture
@@ -151,6 +166,31 @@ git push origin feature/<your-name>/<what-you-are-working-on>
 3. Write a description of your changes
 4. Request review from a teammate
 5. Merge after approval ✅
+
+---
+
+## 🐣 Beginner's Guide to Contributing (No Coding Required!)
+
+If you don't have Git installed or aren't comfortable with the command line, you can still contribute directly through the GitHub website!
+
+### Editing a File (e.g., adding your name to the README)
+1. Navigate to the repository on GitHub.
+2. Click on the file you want to edit (e.g., `README.md`).
+3. Click the **pencil icon** (✏️) in the top right corner of the file view.
+4. Make your changes in the web editor.
+5. Scroll down to **"Commit changes..."**.
+6. Write a short description (e.g., "Add my name to team list").
+7. Select **"Create a new branch for this commit and start a pull request"**.
+8. Click **"Propose changes"** and then **"Create pull request"**.
+
+### Uploading a File (e.g., adding a new document or image)
+1. Navigate to the folder where you want to add the file.
+2. Click the **"Add file"** button near the top right, then select **"Upload files"**.
+3. Drag and drop your file into the box.
+4. Scroll down to **"Commit changes..."**.
+5. Write a short description (e.g., "Upload final presentation PDF").
+6. Select **"Create a new branch for this commit and start a pull request"**.
+7. Click **"Propose changes"** and then **"Create pull request"**.
 
 ---
 
@@ -314,6 +354,16 @@ systolic_top #(
 
 ---
 
+## 🔮 Future Work & Innovation Roadmap
+
+As outlined in our Innovation Exploration Report, we are exploring several architectural improvements over the conventional fixed array:
+
+1.  **Workload-Adaptive / Utilization-Aware Array:** Adapting the active computation region to actual workload dimensions to save power and improve true utilization.
+2.  **Resource-Aware Optimization:** Reducing LUT/DSP overhead while maintaining computational performance.
+3.  **Power-Aware Systolic Array:** Implementing clock gating and operand isolation to reduce unnecessary switching in inactive PEs.
+
+---
+
 ## 🤝 Team
 
 | Member | Role | Branch |
@@ -331,6 +381,14 @@ systolic_top #(
 ## 📜 License
 
 This project is built for the **Edge AI Hackathon 2026**. See the hackathon rules for usage terms.
+
+---
+
+## 📚 References
+
+1. H. T. Kung and C. E. Leiserson, "Systolic Arrays (for VLSI)," *Sparse Matrix Proceedings*, 1978.
+2. N. P. Jouppi et al., "In-Datacenter Performance Analysis of a Tensor Processing Unit," *ISCA*, 2017.
+3. Y. Chen, J. Emer, and V. Sze, "Eyeriss: A Spatial Architecture for Energy-Efficient Dataflow for Convolutional Neural Networks," *ISCA*, 2016.
 
 ---
 
