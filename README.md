@@ -322,6 +322,7 @@ systolic_top #(
 | *Member 2* | *Role* | `feature/name/...` |
 | *Member 3* | *Role* | `feature/name/...` |
 | *Member 4* | *Role* | `feature/name/...` |
+| *Member 5* | *Role* | `feature/name/...` |
 
 > 📝 **Team members**: Update this table with your name and role after cloning!
 
