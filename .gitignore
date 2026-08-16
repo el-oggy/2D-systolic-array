@@ -1,0 +1,49 @@
+# ==========================
+# Verilog / HDL Simulation
+# ==========================
+*.vcd
+*.vvp
+*.out
+*.lxt
+*.lxt2
+*.fst
+
+# ==========================
+# Build / Synthesis Output
+# ==========================
+*.synth
+*.bit
+*.bin
+*.mcs
+*.jic
+work/
+db/
+incremental_db/
+output_files/
+simulation/
+greybox_tmp/
+
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# ==========================
+# IDE / Editor Files
+# ==========================
+.vscode/
+.idea/
+*.suo
+*.user
+*.log
+
+# ==========================
+# Temporary Files
+# ==========================
+tmp/
+temp/
