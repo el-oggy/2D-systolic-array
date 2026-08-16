@@ -96,6 +96,7 @@ Make sure you have these installed:
 | **Git** | [Download Git](https://git-scm.com/downloads) | Version control |
 | **Icarus Verilog** | `sudo apt install iverilog` / [Windows](http://bleyer.org/icarus/) | Verilog simulation |
 | **GTKWave** *(optional)* | `sudo apt install gtkwave` / [Windows](http://gtkwave.sourceforge.net/) | Waveform viewer |
+| **AMD Xilinx Vivado** *(optional)* | [Download Vivado ML Edition](https://www.xilinx.com/support/download.html) | FPGA synthesis and implementation |
 
 ### Step 1 — Clone the Repository
 
