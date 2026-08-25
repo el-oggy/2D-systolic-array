@@ -1,0 +1,1 @@
+-timescale "1ns/1ps" -debug "typical" "tb_step2_systolic_2x2" -s "sim_step2" 

@@ -1,0 +1,1 @@
+-timescale "1ns/1ps" -debug "typical" "tb_step1_pe" -s "sim_step1" 

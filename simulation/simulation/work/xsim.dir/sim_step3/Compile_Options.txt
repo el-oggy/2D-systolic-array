@@ -1,0 +1,1 @@
+-timescale "1ns/1ps" -debug "typical" "tb_step3_skew_buffer" -s "sim_step3" 

@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Wed Aug 19 10:35:34 2026
+# Process ID         : 7872
+# Current directory  : C:/Users/adars/OneDrive/Desktop/vs-code/2D systolic array/2D systolic array.runs/impl_1
+# Command line       : vivado.exe -log processing_element.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source processing_element.tcl -notrace
+# Log file           : C:/Users/adars/OneDrive/Desktop/vs-code/2D systolic array/2D systolic array.runs/impl_1/processing_element.vdi
+# Journal file       : C:/Users/adars/OneDrive/Desktop/vs-code/2D systolic array/2D systolic array.runs/impl_1\vivado.jou
+# Running On         : Laptop
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : AMD Ryzen 5 5500U with Radeon Graphics         
+# CPU Frequency      : 2096 MHz
+# CPU Physical cores : 6
+# CPU Logical cores  : 12
+# Host memory        : 7928 MB
+# Swap memory        : 11274 MB
+# Total Virtual      : 19203 MB
+# Available Virtual  : 3094 MB
+#-----------------------------------------------------------
+source processing_element.tcl -notrace

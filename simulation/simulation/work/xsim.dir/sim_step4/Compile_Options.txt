@@ -1,0 +1,1 @@
+-timescale "1ns/1ps" -debug "typical" "tb_step4_systolic_4x4" -s "sim_step4" 
