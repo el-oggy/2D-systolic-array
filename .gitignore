@@ -1,4 +1,4 @@
-﻿# ==========================
+# ==========================
 # Verilog / HDL Simulation
 # ==========================
 *.vcd
@@ -16,15 +16,12 @@
 *.bin
 *.mcs
 *.jic
+work/
 db/
 incremental_db/
 output_files/
+simulation/
 greybox_tmp/
-
-# ==========================
-# Vivado Build Artifacts (inside simulation/work/)
-# ==========================
-simulation/work/
 
 # ==========================
 # OS Files
