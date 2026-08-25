@@ -375,15 +375,13 @@ As outlined in our Innovation Exploration Report, we are exploring several archi
 
 ## 🤝 Team
 
-| Member | Role | Branch |
-|--------|------|--------|
-| **Adarsh** | Lead / Architecture | `main` |
-| *Member 2* | *Role* | `feature/name/...` |
-| *Member 3* | *Role* | `feature/name/...` |
-| *Member 4* | *Role* | `feature/name/...` |
-| *Member 5* | *Role* | `feature/name/...` |
-
-> 📝 **Team members**: Update this table with your name and role after cloning!
+| Member | Role |
+|--------|------|
+| **Adarsh** | Team Lead / RTL & Architecture |
+| **Gulam** | Team Member |
+| **Yamini** | Team Member |
+| **Arpita** | Team Member |
+| **Mihir** | Team Member |
 
 ---
 
