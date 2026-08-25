@@ -393,11 +393,20 @@ This project is built for the **Edge AI Hackathon 2026**. See the hackathon rule
 
 ---
 
-## 📚 References
+## 📚 References & Research
 
-1. H. T. Kung and C. E. Leiserson, "Systolic Arrays (for VLSI)," *Sparse Matrix Proceedings*, 1978.
-2. N. P. Jouppi et al., "In-Datacenter Performance Analysis of a Tensor Processing Unit," *ISCA*, 2017.
-3. Y. Chen, J. Emer, and V. Sze, "Eyeriss: A Spatial Architecture for Energy-Efficient Dataflow for Convolutional Neural Networks," *ISCA*, 2016.
+### Foundational Literature
+1. **H. T. Kung and C. E. Leiserson**, "Systolic Arrays (for VLSI)," *Sparse Matrix Proceedings*, 1978.
+2. **N. P. Jouppi et al.**, "In-Datacenter Performance Analysis of a Tensor Processing Unit," *ISCA*, 2017.
+3. **Y. Chen, J. Emer, and V. Sze**, "Eyeriss: A Spatial Architecture for Energy-Efficient Dataflow for Convolutional Neural Networks," *ISCA*, 2016.
+
+### Academic Research Papers (in [`research/`](./research/))
+4. **G. Alexakis, D. Schoinianakis, and G. Dimitrakopoulos**, "MPX: A Unified Systolic Array for Matrix and Polynomial Multiplication," *Democritus Univ. & Nokia Bell Labs*. [[PDF](./research/00502886-45a8-4c5e-8499-5a693a1fbfe4.pdf)]
+5. **Z. Yang, L. Wang, D. Ding, X. Zhang, Y. Deng, S. Li, and Q. Dou**, "Systolic Array Based Accelerator and Algorithm Mapping for Deep Learning Algorithms," *Springer CCF-THPC*. [[PDF](./research/978-3-030-05677-3_16.pdf)]
+6. **J. Kim, Q. Zhou, and Z. Yu**, "Photonic Systolic Array for All-Optical Matrix–Matrix Multiplication," *Laser & Photonics Reviews*, 2025/2026. [[PDF](./research/Laser%20%20%20Photonics%20Reviews%20-%202025%20-%20Kim%20-%20Photonic%20Systolic%20Array%20for%20All%E2%80%90Optical%20Matrix%20Matrix%20Multiplication.pdf)]
+
+### Hardware & Simulation Guide
+- **2D Systolic Array Hardware Accelerator: Architecture, Vivado Simulation & Basys 3 FPGA Deployment Manual**: [[Complete PDF Guide](./assets/2D_Systolic_Array_Vivado_Complete_Guide.pdf)]
 
 ---
 
