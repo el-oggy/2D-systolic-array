@@ -1,0 +1,312 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Wed Aug 26 22:43:15 2026
+# Process ID         : 20360
+# Current directory  : C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/vivado/systolic_array_2d/systolic_array_2d.runs/synth_1
+# Command line       : vivado.exe -log basys3_demo_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source basys3_demo_top.tcl
+# Log file           : C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/vivado/systolic_array_2d/systolic_array_2d.runs/synth_1/basys3_demo_top.vds
+# Journal file       : C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/vivado/systolic_array_2d/systolic_array_2d.runs/synth_1\vivado.jou
+# Running On         : Laptop
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : AMD Ryzen 5 5500U with Radeon Graphics         
+# CPU Frequency      : 2096 MHz
+# CPU Physical cores : 6
+# CPU Logical cores  : 12
+# Host memory        : 7928 MB
+# Swap memory        : 12484 MB
+# Total Virtual      : 20413 MB
+# Available Virtual  : 4950 MB
+#-----------------------------------------------------------
+source basys3_demo_top.tcl -notrace
+create_project: Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 602.656 ; gain = 209.430
+Command: synth_design -top basys3_demo_top -part xc7a35tcpg236-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 22712
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1285.094 ; gain = 492.453
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'basys3_demo_top' [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/fpga_basys3/basys3_demo_top.sv:23]
+INFO: [Synth 8-6157] synthesizing module 'systolic_top' [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/systolic_top.sv:27]
+	Parameter N bound to: 4 - type: integer 
+	Parameter DATA_WIDTH bound to: 8 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'controller' [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/controller.sv:13]
+	Parameter N bound to: 4 - type: integer 
+INFO: [Synth 8-226] default block is never used [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/controller.sv:52]
+INFO: [Synth 8-226] default block is never used [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/controller.sv:87]
+INFO: [Synth 8-6155] done synthesizing module 'controller' (0#1) [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/controller.sv:13]
+INFO: [Synth 8-6157] synthesizing module 'skew_buffer' [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/skew_buffer.sv:17]
+	Parameter N bound to: 4 - type: integer 
+	Parameter DATA_WIDTH bound to: 8 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'skew_buffer' (0#1) [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/skew_buffer.sv:17]
+INFO: [Synth 8-6157] synthesizing module 'systolic_array' [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/systolic_array.sv:13]
+	Parameter N bound to: 4 - type: integer 
+	Parameter DATA_WIDTH bound to: 8 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'processing_element' [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/processing_element.sv:13]
+	Parameter DATA_WIDTH bound to: 8 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'processing_element' (0#1) [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/processing_element.sv:13]
+INFO: [Synth 8-6155] done synthesizing module 'systolic_array' (0#1) [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/systolic_array.sv:13]
+INFO: [Synth 8-6155] done synthesizing module 'systolic_top' (0#1) [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/src/systolic_top.sv:27]
+INFO: [Synth 8-6157] synthesizing module 'seven_segment_ctrl' [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/fpga_basys3/seven_segment_ctrl.sv:7]
+INFO: [Synth 8-226] default block is never used [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/fpga_basys3/seven_segment_ctrl.sv:56]
+INFO: [Synth 8-6155] done synthesizing module 'seven_segment_ctrl' (0#1) [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/fpga_basys3/seven_segment_ctrl.sv:7]
+INFO: [Synth 8-6155] done synthesizing module 'basys3_demo_top' (0#1) [C:/Users/adars/OneDrive/Desktop/vs-code/simulation/fpga_basys3/basys3_demo_top.sv:23]
+WARNING: [Synth 8-7129] Port sw[15] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[14] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[13] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[12] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[11] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[10] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[9] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[8] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[7] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[6] in module basys3_demo_top is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 1398.898 ; gain = 606.258
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 1398.898 ; gain = 606.258
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 1398.898 ; gain = 606.258
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1398.898 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/simulation/simulation/fpga_basys3/basys3_constraints.xdc]
+Finished Parsing XDC File [C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/simulation/simulation/fpga_basys3/basys3_constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/simulation/simulation/fpga_basys3/basys3_constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/basys3_demo_top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/basys3_demo_top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1494.008 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1494.008 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 1494.008 ; gain = 701.367
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 1494.008 ; gain = 701.367
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 1494.008 ; gain = 701.367
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'controller'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+              STATE_IDLE |                             0001 |                               00
+              STATE_LOAD |                             0010 |                               01
+           STATE_COMPUTE |                             0100 |                               10
+              STATE_DONE |                             1000 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'controller'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1494.008 ; gain = 701.367
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    8 Bit       Adders := 1     
++---Registers : 
+	               16 Bit    Registers := 16    
+	                8 Bit    Registers := 91    
+	                1 Bit    Registers := 4     
++---Muxes : 
+	   4 Input   16 Bit        Muxes := 5     
+	   2 Input    8 Bit        Muxes := 32    
+	   2 Input    6 Bit        Muxes := 2     
+	   2 Input    5 Bit        Muxes := 16    
+	   4 Input    4 Bit        Muxes := 3     
+	   2 Input    4 Bit        Muxes := 8     
+	   2 Input    3 Bit        Muxes := 8     
+	   4 Input    1 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 7     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-3917] design basys3_demo_top has port dp driven by constant 1
+WARNING: [Synth 8-7129] Port sw[15] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[14] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[13] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[12] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[11] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[10] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[9] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[8] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[7] in module basys3_demo_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[6] in module basys3_demo_top is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1494.008 ; gain = 701.367
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 1607.492 ; gain = 814.852
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:31 ; elapsed = 00:00:34 . Memory (MB): peak = 1658.941 ; gain = 866.301
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:31 ; elapsed = 00:00:34 . Memory (MB): peak = 1658.941 ; gain = 866.301
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1866.688 ; gain = 1074.047
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1866.688 ; gain = 1074.047
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1866.688 ; gain = 1074.047
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1866.688 ; gain = 1074.047
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1866.688 ; gain = 1074.047
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1866.688 ; gain = 1074.047
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++----------------+--------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name     | RTL Name                                   | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++----------------+--------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|basys3_demo_top | u_systolic_top/u_skew_b/data_out_reg[3][1] | 4      | 2     | YES          | NO                 | YES               | 2      | 0       | 
+|basys3_demo_top | u_systolic_top/u_skew_a/data_out_reg[3][2] | 4      | 3     | YES          | NO                 | YES               | 3      | 0       | 
++----------------+--------------------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY4 |   101|
+|3     |LUT1   |     2|
+|4     |LUT2   |   195|
+|5     |LUT3   |    35|
+|6     |LUT4   |    88|
+|7     |LUT5   |     1|
+|8     |LUT6   |    88|
+|9     |SRL16E |     5|
+|10    |FDRE   |   458|
+|11    |FDSE   |     1|
+|12    |IBUF   |     9|
+|13    |OBUF   |    28|
++------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1866.688 ; gain = 1074.047
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 12 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:28 ; elapsed = 00:00:38 . Memory (MB): peak = 1866.688 ; gain = 978.938
+Synthesis Optimization Complete : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1866.688 ; gain = 1074.047
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 1873.469 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 101 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1877.168 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 46df5df9
+INFO: [Common 17-83] Releasing license: Synthesis
+34 Infos, 22 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:42 ; elapsed = 00:01:02 . Memory (MB): peak = 1877.168 ; gain = 1274.512
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1877.168 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/vivado/systolic_array_2d/systolic_array_2d.runs/synth_1/basys3_demo_top.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file basys3_demo_top_utilization_synth.rpt -pb basys3_demo_top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Wed Aug 26 22:44:32 2026...

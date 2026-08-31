@@ -1,0 +1,11 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  --include "../../../../../../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" \
+"../../../../../../../vs-code/simulation/src/processing_element.sv" \
+"../../../../../../../vs-code/simulation/src/systolic_array.sv" \
+"../../../../../../../vs-code/simulation/sim/tb_step2_systolic_2x2.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

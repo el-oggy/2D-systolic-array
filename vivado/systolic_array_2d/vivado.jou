@@ -1,0 +1,26 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Wed Aug 26 23:36:46 2026
+# Process ID         : 22080
+# Current directory  : C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/vivado/systolic_array_2d
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent19096 C:\Users\adars\OneDrive\Desktop\Edge- AI Hackthon\vivado\systolic_array_2d\systolic_array_2d.xpr
+# Log file           : C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/vivado/systolic_array_2d/vivado.log
+# Journal file       : C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/vivado/systolic_array_2d\vivado.jou
+# Running On         : Laptop
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : AMD Ryzen 5 5500U with Radeon Graphics         
+# CPU Frequency      : 2096 MHz
+# CPU Physical cores : 6
+# CPU Logical cores  : 12
+# Host memory        : 7928 MB
+# Swap memory        : 13101 MB
+# Total Virtual      : 21029 MB
+# Available Virtual  : 9289 MB
+#-----------------------------------------------------------
+start_gui
+open_project {C:/Users/adars/OneDrive/Desktop/Edge- AI Hackthon/vivado/systolic_array_2d/systolic_array_2d.xpr}
+update_compile_order -fileset sources_1
