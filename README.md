@@ -275,15 +275,17 @@ The design is synthesizable and tested for the **Xilinx Artix-7 (XC7A35T-1CPG236
 
 ## 📚 Research Papers
 
-The architecture is built on foundational and cutting-edge academic literature located in [`research/`](./research/):
+The architecture is built on foundational and cutting-edge academic literature located in [`research_papers/`](./research_papers/):
 
-1. **MPX: A Unified Systolic Array for Matrix and Polynomial Multiplication** — George Alexakis, Dimitrios Schoinianakis, Giorgos Dimitrakopoulos (*Democritus Univ. & Nokia Bell Labs*). [[PDF](./research/00502886-45a8-4c5e-8499-5a693a1fbfe4.pdf)]
-2. **Systolic Array Based Accelerator and Algorithm Mapping for Deep Learning** — Zhijie Yang et al. (*Springer CCF-THPC*). [[PDF](./research/978-3-030-05677-3_16.pdf)]
-3. **Photonic Systolic Array for All-Optical Matrix–Matrix Multiplication** — Jungmin Kim, Qingyi Zhou, Zongfu Yu (*Laser & Photonics Reviews, 2025/2026*). [[PDF](./research/Laser%20%20%20Photonics%20Reviews%20-%202025%20-%20Kim%20-%20Photonic%20Systolic%20Array%20for%20All%E2%80%90Optical%20Matrix%20Matrix%20Multiplication.pdf)]
+1. **MPX: A Unified Systolic Array for Matrix and Polynomial Multiplication** — George Alexakis, Dimitrios Schoinianakis, Giorgos Dimitrakopoulos (*Democritus Univ. & Nokia Bell Labs*). [[PDF](./research_papers/EXTRA_Alexakis2026_MPX_UnifiedSystolicArray.pdf)]
+2. **Systolic Array Based Accelerator and Algorithm Mapping for Deep Learning** — Zhijie Yang et al. (*Springer CCF-THPC*). [[PDF](./research_papers/EXTRA_Yang2018_SystolicArray_AcceleratorMapping.pdf)]
+3. **Photonic Systolic Array for All-Optical Matrix–Matrix Multiplication** — Jungmin Kim, Qingyi Zhou, Zongfu Yu (*Laser & Photonics Reviews, 2025/2026*). [[PDF](./research_papers/EXTRA_Kim2025_Photonic_Systolic_Array.pdf)]
+4. **Literature Survey - 2D Systolic Array-Based Processing Elements** [[PDF](./Literature%20Survey%20-%202D%20Systolic%20Array-Based%20Processing%20Elements.pdf)]
+5. **2D Systolic Array Innovation Ideas Report** [[PDF](./2D_Systolic_Array_Innovation_Ideas_Report.pdf)]
 
 > [!TIP]
 > **Adding Future Research Papers:**  
-> Drop new `.pdf` files into [`research/`](./research/), add a brief summary to [`research/README.md`](./research/README.md), and reference them in this section.
+> Drop new `.pdf` files into [`research_papers/`](./research_papers/), add a brief summary to [`research_papers/README.md`](./research_papers/README.md), and reference them in this section.
 
 ---
 
@@ -297,7 +299,7 @@ The architecture is built on foundational and cutting-edge academic literature l
 | **Gulam** | Team Member |
 | **Yamini** | Team Member |
 | **Arpita** | Team Member |
-| **Mihir** | Team Member |
+| **Srikanth** | Team Member |
 
 ### 🌿 Git Branching Workflow
 
