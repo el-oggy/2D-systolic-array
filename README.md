@@ -88,7 +88,17 @@ Inspired by the spatial architecture of Google's Tensor Processing Unit (TPU), t
 
 ## 🛠️ Installation & Setup
 
-Expand your operating system below for 1-click installation commands and environment variable setup:
+### 1. Clone the Repository Locally
+To run the simulations, you must clone the repository to your local machine (simulations cannot be run directly on GitHub).
+
+```bash
+git clone https://github.com/<your-username>/2D-systolic-array.git
+cd 2D-systolic-array
+```
+*(If you forked the repository, replace `<your-username>` with your GitHub username).*
+
+### 2. Install Simulator Dependencies
+Expand your operating system below for 1-click installation commands and environment variable setup for Icarus Verilog and GTKWave:
 
 <details>
 <summary><b>🍎 macOS Setup (MacBook Pro / Air — Apple Silicon M1/M2/M3/M4 & Intel)</b></summary>
