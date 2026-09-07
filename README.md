@@ -193,17 +193,34 @@ Every testbench in this project is verified and automated. Choose your desired t
 
 ### 📁 Suite 1: Core Verilog RTL (`2D-systolic-array/`)
 
-```bash
+Navigate to the directory containing the core Verilog files:
+```powershell
 cd 2D-systolic-array
 ```
 
-| Testbench | Description | Compile & Run Commands |
-|---|---|---|
-| **PE Unit Test** | Validates MAC unit (`acc += a*b`) & 1-cycle forwarding | `iverilog -o pe_tb.vvp 1_pe.v 2_pe_tb.v`<br>`vvp pe_tb.vvp` |
-| **2×2 Systolic Grid** | Validates 2D wave-front propagation across 4 PEs | `iverilog -o systolic_2x2.vvp 1_pe.v 3_systolic_array.v 4_systolic_2x2_tb.v`<br>`vvp systolic_2x2.vvp` |
-| **Full 4×4 System** | Full autonomous accelerator (FSM + Skew Buffers + 16 PEs) | `iverilog -o systolic_4x4.vvp 1_pe.v 3_systolic_array.v 5_skew_buffer.v 6_controller.v 7_systolic_top.v 8_systolic_4x4_tb.v`<br>`vvp systolic_4x4.vvp` |
+#### 1. PE Unit Test
+Validates the single Multiply-Accumulate (MAC) unit and 1-cycle forwarding.
+```powershell
+iverilog -g2012 -o pe_tb.vvp 1_pe.v 2_pe_tb.v
+vvp pe_tb.vvp
+gtkwave pe_tb.vcd
+```
 
-*(To view waveforms, add `gtkwave <filename>.vcd` after running simulation).*
+#### 2. 2×2 Systolic Grid Test
+Validates 2D wave-front propagation across 4 PEs with manual skewing.
+```powershell
+iverilog -g2012 -o systolic_2x2_tb.vvp 1_pe.v 3_systolic_array.v 4_systolic_2x2_tb.v
+vvp systolic_2x2_tb.vvp
+gtkwave systolic_2x2_tb.vcd
+```
+
+#### 3. Full 4×4 System Test
+Tests the full autonomous accelerator (Controller + Skew Buffers + 16 PEs).
+```powershell
+iverilog -g2012 -o systolic_4x4_tb.vvp 1_pe.v 3_systolic_array.v 5_skew_buffer.v 6_controller.v 7_systolic_top.v 8_systolic_4x4_tb.v
+vvp systolic_4x4_tb.vvp
+gtkwave systolic_4x4_tb.vcd
+```
 
 ---
 
@@ -297,9 +314,9 @@ The architecture is built on foundational and cutting-edge academic literature l
 |---|---|
 | **Adarsh** | Team Lead / RTL Architecture & FPGA Implementation |
 | **Gulam** | Team Member |
-| **Yamini** | Team Member |
-| **Arpita** | Team Member |
-| **Srikanth** | Team Member |
+| **Yaminee** | Researcher |
+| **Arpita** | Researcher |
+| **Srikanta** | RTL Front End |
 
 ### 🌿 Git Branching Workflow
 
