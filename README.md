@@ -322,11 +322,11 @@ The architecture is built on foundational and cutting-edge academic literature l
 
 | Member | Role |
 |---|---|
-| **Adarsh** | Team Lead / RTL Architecture & FPGA Implementation |
-| **Gulam** | Team Member |
-| **Yaminee** | Researcher |
-| **Arpita** | Researcher |
-| **Srikanta** | RTL Front End |
+| **Adarsh** | Systolic Core |
+| **Gulam** | Integration, Baseline & Silicon |
+| **Yaminee** | Evaluation & Reporting |
+| **Arpita** | Workload & Verification Data |
+| **Srikanta** | Adaptive Control Path |
 
 ### 🌿 Git Branching Workflow
 
