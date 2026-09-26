@@ -266,7 +266,11 @@ cd simulation
   ```
 * **Step 5 — Extended 8×8 Systolic Array (64 PEs):**
   ```bash
-  iverilog -g2012 -o tb_step5_8x8.vvp src/processing_element.sv src/systolic_array.sv src/skew_buffer.sv src/controller.sv src/systolic_top.sv sim/tb_step5_systolic_8x8.sv && vvp tb_step5_8x8.vvp
+  iverilog -g2012 -o tb_step5_8x8.vvp src/systolic_pkg.sv src/processing_element.sv src/systolic_array.sv src/skew_buffer.sv src/controller.sv src/systolic_top.sv sim/tb_step5_systolic_8x8.sv && vvp tb_step5_8x8.vvp
+  ```
+* **Step 6 — Scaled 16×16 Systolic Array Accelerator (256 PEs):**
+  ```bash
+  iverilog -g2012 -o tb_step6_16x16.vvp src/systolic_pkg.sv src/processing_element.sv src/systolic_array.sv src/skew_buffer.sv src/controller.sv src/systolic_top.sv sim/tb_step6_systolic_16x16.sv && vvp tb_step6_16x16.vvp
   ```
 
 </details>
@@ -277,13 +281,14 @@ cd simulation
 
 The design is synthesizable and tested for the **Xilinx Artix-7 (XC7A35T-1CPG236C)** FPGA.
 
-* **FPGA Top Wrapper:** [`simulation/fpga_basys3/basys3_demo_top.sv`](./simulation/fpga_basys3/basys3_demo_top.sv)  
-  *Includes on-chip ROM matrix storage, button triggers, and slide switch matrix index selectors.*
+* **16×16 Scaled FPGA Top Wrapper:** [`simulation/fpga_basys3/basys3_demo_16x16_top.sv`](./simulation/fpga_basys3/basys3_demo_16x16_top.sv)  
+  *256 Processing Elements, on-chip ROM matrix storage, button triggers, 4-bit row selector (`sw[7:4]`), and 4-bit col selector (`sw[3:0]`).*
+* **8×8 / 4×4 FPGA Top Wrappers:** [`simulation/fpga_basys3/basys3_demo_8x8_top.sv`](./simulation/fpga_basys3/basys3_demo_8x8_top.sv) | [`simulation/fpga_basys3/basys3_demo_top.sv`](./simulation/fpga_basys3/basys3_demo_top.sv)
 * **7-Segment Display Controller:** [`simulation/fpga_basys3/seven_segment_ctrl.sv`](./simulation/fpga_basys3/seven_segment_ctrl.sv)  
   *Displays computed 16-bit output matrix values in hexadecimal format across 4 multiplexed digits.*
 * **Physical Constraints:** [`simulation/fpga_basys3/basys3_constraints.xdc`](./simulation/fpga_basys3/basys3_constraints.xdc)  
   *Complete pin mappings for 100MHz system clock, pushbuttons, LEDs, slide switches, and 7-segment cathodes/anodes.*
-* 📖 **Hardware & Vivado Manual:** [[Download Complete Vivado Guide PDF](./assets/2D_Systolic_Array_Vivado_Complete_Guide.pdf)]
+* 📖 **Hardware & Vivado Manual:** [[Download Complete Vivado Guide PDF](./2D_Systolic_Array_Vivado_Complete_Guide.pdf)]
 
 ---
 
@@ -293,10 +298,10 @@ The design is synthesizable and tested for the **Xilinx Artix-7 (XC7A35T-1CPG236
 |---|---|---|---|
 | **PE Unit Test** | Atomic MAC math, zero-reset, forwarding registers | Scalar dot-product $[1,2,3] \cdot [7,10,13] = 66$ | ✅ **PASS** |
 | **2×2 Systolic Grid** | Spatial wave-front dataflow & diagonal accumulation | 2×2 Dense Matrix Multiplication | ✅ **PASS** |
-| **Skew Buffer** | Triangular delay line timing ($0, 1, \dots, N-1$) | 3×3 Staggered Matrix Conversion | ✅ **PASS** |
-| **Identity GEMM** | Autonomous FSM + Skew Buffers | $A \times I = A$ (4×4 & 8×8) | ✅ **PASS** |
-| **Scalar Scaling** | Arithmetic linearity & precision verification | $A \times 2I = 2A$ | ✅ **PASS** |
-| **Dense GEMM** | Arbitrary signed integer multiplication vs Golden Model | 4×4 & 8×8 Random Signed Matrices | ✅ **PASS** |
+| **Skew Buffer** | Triangular delay line timing ($0, 1, \dots, N-1$) | 3×3 & 16×16 Staggered Matrix Conversion | ✅ **PASS** |
+| **Identity GEMM** | Autonomous FSM + Skew Buffers | $A \times I = A$ (4×4, 8×8 & 16×16) | ✅ **PASS (256/256)** |
+| **Scalar Scaling** | Arithmetic linearity & precision verification | $A \times 2I = 2A$ (16×16) | ✅ **PASS (256/256)** |
+| **Dense GEMM** | Arbitrary signed integer multiplication vs Golden Model | 4×4, 8×8 & 16×16 Random Signed Matrices | ✅ **PASS (256/256)** |
 
 ---
 

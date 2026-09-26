@@ -11,7 +11,7 @@
 // ============================================================================
 
 module systolic_array #(
-    parameter N          = 4,
+    parameter N          = 16,
     parameter DATA_WIDTH = 8
 )(
     input  wire                               clk,

@@ -11,7 +11,7 @@
 // ============================================================================
 
 module controller #(
-    parameter N = 4
+    parameter N = 16
 )(
     input  wire  clk,
     input  wire  rst,
@@ -35,7 +35,8 @@ module controller #(
 
     // Total cycles to skew + feed + propagate through N x N array
     localparam COMPUTE_CYCLES = 3*N - 1;
-    reg [7:0] cycle_count;
+    localparam COUNTER_WIDTH  = (COMPUTE_CYCLES > 1) ? $clog2(COMPUTE_CYCLES + 1) : 1;
+    reg [COUNTER_WIDTH-1:0] cycle_count;
 
     // State Register
     always_ff @(posedge clk) begin
@@ -70,9 +71,9 @@ module controller #(
     // Cycle Counter
     always_ff @(posedge clk) begin
         if (rst || state != STATE_COMPUTE) begin
-            cycle_count <= 8'd0;
+            cycle_count <= '0;
         end else begin
-            cycle_count <= cycle_count + 8'd1;
+            cycle_count <= cycle_count + 1'b1;
         end
     end
 

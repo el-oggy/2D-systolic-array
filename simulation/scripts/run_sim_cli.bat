@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 echo ============================================================================
-echo   2D Systolic Array - Vivado Automated Simulation Runner
+echo   2D Systolic Array - Vivado Automated Simulation Runner (Scaled 16x16)
 echo ============================================================================
 
 :: Locate Vivado installation
@@ -16,8 +16,9 @@ set WORKDIR=%~dp0\..\work
 if not exist "%WORKDIR%" mkdir "%WORKDIR%"
 cd /d "%WORKDIR%"
 
-echo [1/5] Compiling Design Sources into SystemVerilog Work Library...
+echo [1/7] Compiling Design Sources into SystemVerilog Work Library...
 call "%VIVADO_BIN%\xvlog.bat" -sv -relax ^
+    "%~dp0\..\src\systolic_pkg.sv" ^
     "%~dp0\..\src\processing_element.sv" ^
     "%~dp0\..\src\systolic_array.sv" ^
     "%~dp0\..\src\skew_buffer.sv" ^
@@ -29,12 +30,14 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo [2/5] Compiling Testbenches...
+echo [2/7] Compiling Testbenches...
 call "%VIVADO_BIN%\xvlog.bat" -sv -relax ^
     "%~dp0\..\sim\tb_step1_pe.sv" ^
     "%~dp0\..\sim\tb_step2_systolic_2x2.sv" ^
     "%~dp0\..\sim\tb_step3_skew_buffer.sv" ^
-    "%~dp0\..\sim\tb_step4_systolic_4x4.sv"
+    "%~dp0\..\sim\tb_step4_systolic_4x4.sv" ^
+    "%~dp0\..\sim\tb_step5_systolic_8x8.sv" ^
+    "%~dp0\..\sim\tb_step6_systolic_16x16.sv"
 if %errorlevel% neq 0 (
     echo [ERROR] Testbench compilation failed!
     exit /b %errorlevel%
@@ -70,6 +73,20 @@ call "%VIVADO_BIN%\xsim.bat" sim_step4 -R
 
 echo.
 echo ============================================================================
-echo   ALL SIMULATION STEPS FINISHED SUCCESSFULLY!
+echo   RUNNING STEP 5: 8x8 Systolic Top Integrated Test (tb_step5_systolic_8x8)
+echo ============================================================================
+call "%VIVADO_BIN%\xelab.bat" -timescale 1ns/1ps -debug typical tb_step5_systolic_8x8 -s sim_step5
+call "%VIVADO_BIN%\xsim.bat" sim_step5 -R
+
+echo.
+echo ============================================================================
+echo   RUNNING STEP 6: 16x16 Scaled Systolic Top Test (tb_step6_systolic_16x16)
+echo ============================================================================
+call "%VIVADO_BIN%\xelab.bat" -timescale 1ns/1ps -debug typical tb_step6_systolic_16x16 -s sim_step6
+call "%VIVADO_BIN%\xsim.bat" sim_step6 -R
+
+echo.
+echo ============================================================================
+echo   ALL 6 SIMULATION STEPS (INCLUDING 16x16 SCALED ARRAY) FINISHED SUCCESSFULLY!
 echo ============================================================================
 pause
