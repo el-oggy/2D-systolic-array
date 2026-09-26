@@ -11,20 +11,19 @@ os.makedirs(assets_dir, exist_ok=True)
 print(f"Generating assets into: {assets_dir}")
 
 # =============================================================================
-# 1. PIXEL-PERFECT 16x16 FSM CONTROLLER STATE MACHINE DIAGRAM
+# 1. CLEAN MINIMALIST WHITE-BACKGROUND FSM CONTROLLER STATE DIAGRAM
 # =============================================================================
-fig, ax = plt.subplots(figsize=(14, 8), dpi=300)
-fig.patch.set_facecolor('#0d1117') # High-tech dark slate engineering theme
-ax.set_facecolor('#0d1117')
+fig, ax = plt.subplots(figsize=(14, 7.8), dpi=300)
+fig.patch.set_facecolor('#ffffff') # Clean white background requested by user
+ax.set_facecolor('#ffffff')
 ax.axis('off')
 
-# Title & Subtitle with distinct vertical clearance
+# Title & Subtitle with crisp contrast
 ax.text(0.5, 0.95, "2D Systolic Array Hardware Accelerator — FSM Controller Architecture",
-        ha='center', va='center', fontsize=16, fontweight='bold', color='#58a6ff')
-ax.text(0.5, 0.905, "Scaled for 16×16 Matrix Operations (256 Processing Elements) | 48-Cycle Compute Pipeline",
-        ha='center', va='center', fontsize=10.5, color='#8b949e')
+        ha='center', va='center', fontsize=16, fontweight='bold', color='#0f172a', fontfamily='sans-serif')
+ax.text(0.5, 0.91, "Scaled for 16×16 Matrix Operations (256 Processing Elements) | 48-Cycle Autonomous Execution",
+        ha='center', va='center', fontsize=10.5, color='#475569', fontfamily='sans-serif')
 
-# State Box Data: (Name, Encoding, Duration, Outputs, CenterX, CenterY, HeaderColor, BoxColor)
 states = [
     {
         "name": "STATE_IDLE",
@@ -39,7 +38,7 @@ states = [
             ("done",      "0")
         ],
         "x": 0.13, "y": 0.58,
-        "hdr_color": "#1f6feb", "box_color": "#161b22"
+        "hdr_color": "#0284c7", "box_bg": "#f8fafc", "border_col": "#0369a1"
     },
     {
         "name": "STATE_LOAD",
@@ -54,7 +53,7 @@ states = [
             ("done",      "0")
         ],
         "x": 0.38, "y": 0.58,
-        "hdr_color": "#d29922", "box_color": "#161b22"
+        "hdr_color": "#d97706", "box_bg": "#fffbeb", "border_col": "#b45309"
     },
     {
         "name": "STATE_COMPUTE",
@@ -69,7 +68,7 @@ states = [
             ("done",      "0")
         ],
         "x": 0.64, "y": 0.58,
-        "hdr_color": "#238636", "box_color": "#161b22"
+        "hdr_color": "#16a34a", "box_bg": "#f0fdf4", "border_col": "#15803d"
     },
     {
         "name": "STATE_DONE",
@@ -84,7 +83,7 @@ states = [
             ("done",      "1")
         ],
         "x": 0.89, "y": 0.58,
-        "hdr_color": "#8957e5", "box_color": "#161b22"
+        "hdr_color": "#7c3aed", "box_bg": "#faf5ff", "border_col": "#6d28d9"
     }
 ]
 
@@ -95,86 +94,86 @@ for st in states:
     bx = st["x"] - box_w / 2
     by = st["y"] - box_h / 2
     
-    # Outer border
+    # Outer box
     rect_bg = patches.FancyBboxPatch((bx, by), box_w, box_h,
-                                     boxstyle="round,pad=0.015,rounding_size=0.02",
-                                     linewidth=1.8, edgecolor=st["hdr_color"],
-                                     facecolor=st["box_color"], zorder=2)
+                                     boxstyle="round,pad=0.012,rounding_size=0.02",
+                                     linewidth=1.8, edgecolor=st["border_col"],
+                                     facecolor=st["box_bg"], zorder=2)
     ax.add_patch(rect_bg)
     
     # Header bar
     hdr_h = 0.075
     rect_hdr = patches.FancyBboxPatch((bx, by + box_h - hdr_h), box_w, hdr_h,
-                                      boxstyle="round,pad=0.015,rounding_size=0.02",
+                                      boxstyle="round,pad=0.012,rounding_size=0.02",
                                       linewidth=0, facecolor=st["hdr_color"], zorder=3)
     ax.add_patch(rect_hdr)
     
     # State name & code
     ax.text(st["x"], by + box_h - 0.024, f"{st['name']} ({st['code']})",
-            ha='center', va='center', fontsize=10.5, fontweight='bold', color='#ffffff', zorder=4)
+            ha='center', va='center', fontsize=10, fontweight='bold', color='#ffffff', zorder=4)
     ax.text(st["x"], by + box_h - 0.052, st["dur"],
-            ha='center', va='center', fontsize=7.5, fontweight='bold', color='#e6edf3', zorder=4)
+            ha='center', va='center', fontsize=7.5, fontweight='bold', color='#f8fafc', zorder=4)
     
     # Description
     ax.text(st["x"], by + box_h - 0.105, st["desc"],
-            ha='center', va='center', fontsize=8, color='#c9d1d9', zorder=4)
+            ha='center', va='center', fontsize=8, color='#334155', zorder=4)
     
     # Divider line
     ax.plot([bx + 0.015, bx + box_w - 0.015], [by + 0.12, by + 0.12],
-            color='#30363d', lw=1, zorder=4)
+            color='#cbd5e1', lw=1, zorder=4)
     
     # Outputs label
-    ax.text(bx + 0.02, by + 0.098, "Control Outputs:", fontsize=7.2, fontweight='bold', color='#8b949e', zorder=4)
+    ax.text(bx + 0.02, by + 0.098, "Control Outputs:", fontsize=7.2, fontweight='bold', color='#64748b', zorder=4)
     
-    # Output signals formatted clearly
+    # Output signals
     sig_strs = [f"{k}={v}" for k, v in st["outputs"]]
     line1 = f"{sig_strs[0]}  {sig_strs[1]}  {sig_strs[2]}"
     line2 = f"{sig_strs[3]}  {sig_strs[4]}"
-    ax.text(st["x"], by + 0.062, line1, ha='center', va='center', fontsize=7.5, color='#e6edf3', fontfamily='monospace', zorder=4)
-    ax.text(st["x"], by + 0.028, line2, ha='center', va='center', fontsize=7.5, color='#e6edf3', fontfamily='monospace', zorder=4)
+    ax.text(st["x"], by + 0.062, line1, ha='center', va='center', fontsize=7.5, color='#0f172a', fontfamily='monospace', zorder=4)
+    ax.text(st["x"], by + 0.028, line2, ha='center', va='center', fontsize=7.5, color='#0f172a', fontfamily='monospace', zorder=4)
 
-# Forward Transition Arrows
+# Transition Arrows (High contrast dark grey #334155 with colored labels)
 # 1. IDLE -> LOAD
 ax.annotate('', xy=(0.28, 0.58), xytext=(0.23, 0.58),
-            arrowprops=dict(arrowstyle="->", lw=2.2, color='#58a6ff', mutation_scale=16), zorder=5)
+            arrowprops=dict(arrowstyle="->", lw=2.2, color='#0284c7', mutation_scale=15), zorder=5)
 ax.text(0.255, 0.615, "start == 1", ha='center', va='center', fontsize=8.5, fontweight='bold',
-        color='#58a6ff', bbox=dict(boxstyle='round,pad=0.2', facecolor='#0d1117', edgecolor='#58a6ff', lw=0.8))
+        color='#0284c7', bbox=dict(boxstyle='round,pad=0.2', facecolor='#ffffff', edgecolor='#0284c7', lw=0.8))
 
 # 2. LOAD -> COMPUTE
 ax.annotate('', xy=(0.54, 0.58), xytext=(0.48, 0.58),
-            arrowprops=dict(arrowstyle="->", lw=2.2, color='#d29922', mutation_scale=16), zorder=5)
+            arrowprops=dict(arrowstyle="->", lw=2.2, color='#d97706', mutation_scale=15), zorder=5)
 ax.text(0.51, 0.615, "1 Cycle\n(Unconditional)", ha='center', va='center', fontsize=8, fontweight='bold',
-        color='#d29922', bbox=dict(boxstyle='round,pad=0.2', facecolor='#0d1117', edgecolor='#d29922', lw=0.8))
+        color='#d97706', bbox=dict(boxstyle='round,pad=0.2', facecolor='#ffffff', edgecolor='#d97706', lw=0.8))
 
 # 3. COMPUTE -> DONE
 ax.annotate('', xy=(0.79, 0.58), xytext=(0.74, 0.58),
-            arrowprops=dict(arrowstyle="->", lw=2.2, color='#238636', mutation_scale=16), zorder=5)
+            arrowprops=dict(arrowstyle="->", lw=2.2, color='#16a34a', mutation_scale=15), zorder=5)
 ax.text(0.765, 0.615, "cycle_count ==\n3N-2 (46)", ha='center', va='center', fontsize=8, fontweight='bold',
-        color='#3fb950', bbox=dict(boxstyle='round,pad=0.2', facecolor='#0d1117', edgecolor='#238636', lw=0.8))
+        color='#16a34a', bbox=dict(boxstyle='round,pad=0.2', facecolor='#ffffff', edgecolor='#16a34a', lw=0.8))
 
-# 4. COMPUTE self loop (count++)
+# 4. COMPUTE self loop
 ax.annotate('', xy=(0.62, 0.73), xytext=(0.66, 0.73),
-            arrowprops=dict(arrowstyle="->", lw=2, color='#3fb950',
+            arrowprops=dict(arrowstyle="->", lw=2, color='#16a34a',
                             connectionstyle="arc3,rad=-1.7", mutation_scale=14), zorder=5)
 ax.text(0.64, 0.815, "cycle_count < 46\n(count++)", ha='center', va='center', fontsize=8,
-        fontweight='bold', color='#3fb950')
+        fontweight='bold', color='#16a34a')
 
-# 5. DONE -> LOAD (Loopback underneath curving downwards below boxes)
+# 5. DONE -> LOAD (Loopback underneath)
 ax.annotate('', xy=(0.38, 0.41), xytext=(0.89, 0.41),
-            arrowprops=dict(arrowstyle="->", lw=2.2, color='#a371f7',
+            arrowprops=dict(arrowstyle="->", lw=2.2, color='#7c3aed',
                             connectionstyle="arc3,rad=-0.25", mutation_scale=16), zorder=5)
-ax.text(0.635, 0.315, "start == 1 (Trigger New Computation Run Without Full Hardware Reset)",
-        ha='center', va='center', fontsize=8.5, fontweight='bold', color='#a371f7',
-        bbox=dict(boxstyle='round,pad=0.35', facecolor='#161b22', edgecolor='#a371f7', lw=1.2), zorder=6)
+ax.text(0.635, 0.315, "start == 1 (Launch New Computation Without Hardware Reset)",
+        ha='center', va='center', fontsize=8.5, fontweight='bold', color='#7c3aed',
+        bbox=dict(boxstyle='round,pad=0.35', facecolor='#ffffff', edgecolor='#7c3aed', lw=1.2), zorder=6)
 
-# Bottom Specification Panel with clean margins & hierarchy
+# Bottom Specification Table Panel (Clean White Card)
 panel_bg = patches.FancyBboxPatch((0.04, 0.035), 0.92, 0.22,
                                   boxstyle="round,pad=0.015,rounding_size=0.015",
-                                  linewidth=1.2, edgecolor='#30363d', facecolor='#161b22', zorder=2)
+                                  linewidth=1.2, edgecolor='#cbd5e1', facecolor='#f8fafc', zorder=2)
 ax.add_patch(panel_bg)
 
 ax.text(0.065, 0.22, "16×16 HARDWARE ACCELERATOR SYSTEM SPECIFICATIONS & METRICS",
-        fontsize=10, fontweight='bold', color='#58a6ff', zorder=3)
+        fontsize=10, fontweight='bold', color='#0f172a', zorder=3)
 
 bullets = [
     "• MATRIX DIMENSIONS: N = 16 (16×16 Dense INT8 Matrix Multiplication, 256 Total Elements per Matrix)",
@@ -186,113 +185,117 @@ bullets = [
 
 y_pos = 0.18
 for bullet in bullets:
-    ax.text(0.065, y_pos, bullet, fontsize=8, color='#c9d1d9', zorder=3)
+    ax.text(0.065, y_pos, bullet, fontsize=8, color='#334155', zorder=3)
     y_pos -= 0.032
 
 plt.tight_layout()
-plt.savefig(os.path.join(assets_dir, "fsm_diagram.png"), dpi=300, facecolor='#0d1117')
+plt.savefig(os.path.join(assets_dir, "fsm_diagram.png"), dpi=300, facecolor='#ffffff')
 plt.close()
-print("1. fsm_diagram.png updated successfully.")
+print("1. fsm_diagram.png updated with clean white background.")
 
 # =============================================================================
-# 2. 16x16 2D SYSTOLIC ARRAY ARCHITECTURE DIAGRAM
+# 2. SINGLE PE WAVEFORM FOR 16x16 MULTIPLICATION (16-CYCLE ACCUMULATION)
 # =============================================================================
-fig, ax = plt.subplots(figsize=(13, 7.5), dpi=300)
+fig, axs = plt.subplots(7, 1, figsize=(12, 7.5), sharex=True, dpi=300)
 fig.patch.set_facecolor('#ffffff')
-ax.set_facecolor('#ffffff')
-ax.axis('off')
+plt.subplots_adjust(hspace=0.45, top=0.92, bottom=0.08, left=0.12, right=0.96)
 
-ax.text(0.5, 0.96, "2D Systolic Array Hardware Architecture (16×16 Grid = 256 Processing Elements)",
-        ha='center', va='center', fontsize=14, fontweight='bold', color='#111827')
-ax.text(0.5, 0.92, "Spatial Wave-Front Dataflow: Matrix A (Horizontal Skew) × Matrix B (Vertical Skew)",
-        ha='center', va='center', fontsize=10, color='#6b7280')
+cycles = 19
+t = np.arange(cycles)
 
-grid_n = 4
-pe_size = 0.075
-spacing = 0.115
-start_x = 0.37
-start_y = 0.62
+# Values for 16-cycle MAC: a_in = [1..16], b_in = [2..2] (constant 2 for clear visual math)
+clk_sig = [i % 2 for i in range(cycles)]
+rst_sig = [1 if i == 0 else 0 for i in range(cycles)]
+en_sig  = [1 if 1 <= i <= 16 else 0 for i in range(cycles)]
+a_in_sig= [0 if i == 0 or i > 16 else (i * 3) - 10 for i in range(cycles)] # signed variations
+b_in_sig= [0 if i == 0 or i > 16 else (2 if i % 2 == 0 else -1) for i in range(cycles)]
 
-labels = [
-    ["PE(0,0)", "PE(0,1)", "PE(0,2)", "PE(0,15)"],
-    ["PE(1,0)", "PE(1,1)", "PE(1,2)", "PE(1,15)"],
-    ["PE(2,0)", "PE(2,1)", "PE(2,2)", "PE(2,15)"],
-    ["PE(15,0)", "PE(15,1)", "PE(15,2)", "PE(15,15)"]
-]
+# Calculate theoretical acc, a_out, b_out
+acc_val = 0
+acc_sig = [0] * cycles
+a_out_sig = [0] * cycles
+b_out_sig = [0] * cycles
 
-for r in range(grid_n):
-    for c in range(grid_n):
-        px = start_x + c * spacing
-        py = start_y - r * spacing
-        wave_cycle = r + c
-        pe_box = patches.FancyBboxPatch((px, py), pe_size, pe_size,
-                                        boxstyle="round,pad=0.005",
-                                        facecolor='#e0f2fe' if wave_cycle < 2 else '#bae6fd' if wave_cycle < 4 else '#7dd3fc',
-                                        edgecolor='#0284c7', linewidth=1.5)
-        ax.add_patch(pe_box)
-        ax.text(px + pe_size/2, py + pe_size/2 + 0.012, labels[r][c],
-                ha='center', va='center', fontsize=7.5, fontweight='bold', color='#0369a1')
-        ax.text(px + pe_size/2, py + pe_size/2 - 0.014, "MAC",
-                ha='center', va='center', fontsize=7, color='#0284c7')
+for i in range(1, cycles):
+    if en_sig[i]:
+        acc_val += (a_in_sig[i] * b_in_sig[i])
+        acc_sig[i] = acc_val
+        a_out_sig[i] = a_in_sig[i]
+        b_out_sig[i] = b_in_sig[i]
+    else:
+        acc_sig[i] = acc_val
+        a_out_sig[i] = 0
+        b_out_sig[i] = 0
 
-# Interconnect arrows
-for r in range(grid_n):
-    for c in range(grid_n):
-        px = start_x + c * spacing
-        py = start_y - r * spacing
-        if c < grid_n - 1:
-            ax.annotate('', xy=(px + spacing, py + pe_size/2), xytext=(px + pe_size, py + pe_size/2),
-                        arrowprops=dict(arrowstyle="->", lw=1.2, color='#2563eb'))
-        if r < grid_n - 1:
-            ax.annotate('', xy=(px + pe_size/2, py - spacing + pe_size), xytext=(px + pe_size/2, py),
-                        arrowprops=dict(arrowstyle="->", lw=1.2, color='#16a34a'))
+def plot_step_sig(ax, t, val, label, color='#1f77b4', is_bus=False):
+    t_step = np.repeat(t, 2)[1:]
+    val_step = np.repeat(val, 2)[:-1]
+    ax.step(t_step, val_step, where='post', color=color, linewidth=1.8)
+    ax.set_ylabel(label, rotation=0, labelpad=40, va='center', fontweight='bold', fontsize=8.5, color='#0f172a')
+    ax.grid(True, linestyle=':', alpha=0.5, color='#94a3b8')
+    if is_bus:
+        ymin = min(val_step)
+        ymax = max(val_step)
+        margin = max(abs(ymax - ymin) * 0.25, 2)
+        ax.set_ylim(ymin - margin, ymax + margin)
+        for i in range(len(t)-1):
+            if val[i] != 0 or i in [1, 2, 16]:
+                ax.text(t[i]+0.5, val[i], str(val[i]), ha='center', va='bottom', fontsize=7, color=color, fontweight='bold')
+    else:
+        ax.set_ylim(-0.2, 1.2)
 
-ax.text(start_x + 2.5 * spacing + pe_size/2, start_y - 1.5 * spacing + pe_size/2, "· · ·\n(Cols 3-14)",
-        ha='center', va='center', fontsize=8, color='#64748b', fontweight='bold')
-ax.text(start_x + 1.5 * spacing + pe_size/2, start_y - 2.5 * spacing + pe_size/2, "· · · (Rows 3-14)",
-        ha='center', va='center', fontsize=8, color='#64748b', fontweight='bold')
+plot_step_sig(axs[0], t, [i % 2 for i in range(cycles)], 'clk', color='#334155')
+plot_step_sig(axs[1], t, rst_sig, 'rst', color='#dc2626')
+plot_step_sig(axs[2], t, en_sig, 'en', color='#16a34a')
+plot_step_sig(axs[3], t, a_in_sig, 'a_in', color='#0284c7', is_bus=True)
+plot_step_sig(axs[4], t, b_in_sig, 'b_in', color='#9333ea', is_bus=True)
+plot_step_sig(axs[5], t, a_out_sig, 'a_out (fwd)', color='#0369a1', is_bus=True)
+plot_step_sig(axs[6], t, acc_sig, 'acc (sum)', color='#ea580c', is_bus=True)
 
-# Matrix A Skew Buffer (Left)
-skew_a_box = patches.FancyBboxPatch((0.08, start_y - 3*spacing), 0.20, 3*spacing + pe_size,
-                                    boxstyle="round,pad=0.01",
-                                    facecolor='#fef3c7', edgecolor='#d97706', linewidth=2)
-ax.add_patch(skew_a_box)
-ax.text(0.18, start_y - 1.5*spacing + pe_size/2,
-        "Matrix A Skew Buffer\n(16 Rows × 31 Stages)\n\nDelay Formulation:\nRow r = r cycles delay\n(Row 0: 0, ..., Row 15: 15)",
-        ha='center', va='center', fontsize=8.2, fontweight='bold', color='#92400e')
+axs[6].set_xlabel("Clock Cycle Index (16 Clock Cycles of Dot-Product Multiply-Accumulation)", fontweight='bold', fontsize=9.5, color='#0f172a')
+axs[0].set_title("Single Processing Element (PE) Waveform — 16-Cycle Vector Dot-Product (acc <= acc + a_in * b_in)", fontweight='bold', fontsize=11, color='#0f172a')
 
-for r in range(grid_n):
-    py = start_y - r * spacing + pe_size/2
-    ax.annotate('', xy=(start_x, py), xytext=(0.28, py),
-                arrowprops=dict(arrowstyle="->", lw=1.6, color='#d97706'))
-
-# Matrix B Skew Buffer (Top)
-skew_b_box = patches.FancyBboxPatch((start_x, start_y + pe_size + 0.05), 3*spacing + pe_size, 0.11,
-                                    boxstyle="round,pad=0.01",
-                                    facecolor='#dcfce7', edgecolor='#16a34a', linewidth=2)
-ax.add_patch(skew_b_box)
-ax.text(start_x + 1.5*spacing + pe_size/2, start_y + pe_size + 0.105,
-        "Matrix B Column Skew Buffer (16 Cols × 31 Stages) — Delay: Col c = c cycles",
-        ha='center', va='center', fontsize=8.5, fontweight='bold', color='#166534')
-
-for c in range(grid_n):
-    px = start_x + c * spacing + pe_size/2
-    ax.annotate('', xy=(px, start_y + pe_size), xytext=(px, start_y + pe_size + 0.05),
-                arrowprops=dict(arrowstyle="->", lw=1.6, color='#16a34a'))
-
-# Controller Box
-ctrl_box = patches.FancyBboxPatch((0.08, 0.05), 0.84, 0.13,
-                                  boxstyle="round,pad=0.01",
-                                  facecolor='#f3e8ff', edgecolor='#9333ea', linewidth=1.8)
-ax.add_patch(ctrl_box)
-ax.text(0.5, 0.135, "FSM Central Controller & Autonomous Handshake",
-        ha='center', va='center', fontsize=10.5, fontweight='bold', color='#6b21a8')
-ax.text(0.5, 0.085, "Inputs: clk, rst, start  |  Outputs: load_en (Buf Load), shift_en (Stream), array_en (Clock PEs), array_rst, done (Cycle 48)\nLatency = 1 cycle (Load) + 47 cycles (Compute 3N-1) = 48 Clock Cycles (480 ns @ 100MHz)",
-        ha='center', va='center', fontsize=8.2, color='#581c87')
-
-plt.tight_layout()
-plt.savefig(os.path.join(assets_dir, "systolic_16x16_architecture.png"), dpi=300)
+plt.savefig(os.path.join(assets_dir, "pe_16x16_waveform.png"), dpi=300, facecolor='#ffffff')
 plt.close()
-print("2. systolic_16x16_architecture.png updated successfully.")
+print("2. pe_16x16_waveform.png generated successfully.")
+
+# =============================================================================
+# 3. 16x16 GRID OUTPUT WAVE-FRONT PROGRESSION WAVEFORM
+# =============================================================================
+fig, axs = plt.subplots(6, 1, figsize=(13, 7.5), sharex=True, dpi=300)
+fig.patch.set_facecolor('#ffffff')
+plt.subplots_adjust(hspace=0.45, top=0.92, bottom=0.08, left=0.14, right=0.96)
+
+total_cycles = 50
+t = np.arange(total_cycles)
+
+# Representative PE output completions along diagonal: (r, c) reaches final product at cycle r + c + N
+# PE(0,0): completes at cycle 0 + 0 + 16 = 16
+# PE(3,3): completes at cycle 3 + 3 + 16 = 22
+# PE(7,7): completes at cycle 7 + 7 + 16 = 30
+# PE(11,11): completes at cycle 11 + 11 + 16 = 38
+# PE(15,15): completes at cycle 15 + 15 + 16 = 46
+# done asserts at cycle 47/48
+
+pe00_acc = [0 if i < 1 else min(i * 12, 192) for i in range(total_cycles)]
+pe33_acc = [0 if i < 7 else min((i-6) * 12, 192) for i in range(total_cycles)]
+pe77_acc = [0 if i < 15 else min((i-14) * 12, 192) for i in range(total_cycles)]
+pe11_acc = [0 if i < 23 else min((i-22) * 12, 192) for i in range(total_cycles)]
+pe15_acc = [0 if i < 31 else min((i-30) * 12, 192) for i in range(total_cycles)]
+done_sig = [1 if i >= 47 else 0 for i in range(total_cycles)]
+
+plot_step_sig(axs[0], t, [i % 2 for i in range(total_cycles)], 'clk', color='#334155')
+plot_step_sig(axs[1], t, pe00_acc, 'PE[0][0]\n(Row 0, Col 0)', color='#0284c7', is_bus=True)
+plot_step_sig(axs[2], t, pe33_acc, 'PE[3][3]\n(Row 3, Col 3)', color='#0d9488', is_bus=True)
+plot_step_sig(axs[3], t, pe77_acc, 'PE[7][7]\n(Row 7, Col 7)', color='#16a34a', is_bus=True)
+plot_step_sig(axs[4], t, pe15_acc, 'PE[15][15]\n(Corner PE)', color='#d97706', is_bus=True)
+plot_step_sig(axs[5], t, done_sig, 'done (valid)', color='#7c3aed', is_bus=False)
+
+axs[5].set_xlabel("Simulation Clock Cycles (Total Latency: 48 Cycles @ 100 MHz)", fontweight='bold', fontsize=9.5, color='#0f172a')
+axs[0].set_title("16×16 Systolic Array Spatial Wave-Front Diagonal Progression Waveform", fontweight='bold', fontsize=11, color='#0f172a')
+
+plt.savefig(os.path.join(assets_dir, "systolic_16x16_waveform.png"), dpi=300, facecolor='#ffffff')
+plt.close()
+print("3. systolic_16x16_waveform.png generated successfully.")
 
 print("All asset updates completed.")

@@ -1,4 +1,4 @@
-﻿# ==========================
+# ==========================
 # Verilog / HDL Simulation
 # ==========================
 *.vcd
@@ -25,6 +25,10 @@ greybox_tmp/
 # Vivado Simulation Work Output
 # ==========================
 simulation/work/
+matrix_transaction/scripts/work/
+simulation/vivado_bd_proj/
+*.jou
+*.pb
 
 # ==========================
 # OS Files
