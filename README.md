@@ -329,7 +329,7 @@ The architecture is built on foundational and cutting-edge academic literature l
 |---|---|
 | **Adarsh** | Systolic Core |
 | **Ghulam** | Integration, Baseline & Silicon |
-| **Yaminee** | Evaluation & Reporting |
+| **Asish** | Evaluation & Reporting |
 | **Arpita** | Workload & Verification Data |
 | **Srikanta** | Adaptive Control Path |
 
