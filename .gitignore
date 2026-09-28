@@ -29,6 +29,8 @@ matrix_transaction/scripts/work/
 simulation/vivado_bd_proj/
 *.jou
 *.pb
+dfx_runtime.txt
+*.debug
 
 # ==========================
 # OS Files
