@@ -28,12 +28,12 @@ if exist "C:\Xilinx\2025.1\Vivado\settings64.bat" (
 
 echo [1/3] Compiling Synthesizable RTL and Testbench...
 call xvlog --incr --relax -sv ^
-    "%REPO_ROOT%\rtl\systolic_pkg.sv" ^
-    "%REPO_ROOT%\rtl\processing_element.sv" ^
-    "%REPO_ROOT%\rtl\skew_buffer.sv" ^
-    "%REPO_ROOT%\rtl\systolic_array.sv" ^
-    "%REPO_ROOT%\rtl\controller.sv" ^
-    "%REPO_ROOT%\rtl\systolic_top.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\src\systolic_pkg.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\src\processing_element.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\src\skew_buffer.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\src\systolic_array.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\src\controller.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\src\systolic_top.sv" ^
     "%REPO_ROOT%\boards\pynq_z2\sim\tb\tb_step6_systolic_16x16.sv"
 if errorlevel 1 (
     echo [ERROR] Compilation failed!
