@@ -6,10 +6,12 @@ Welcome! This package contains the complete, self-contained 16x16 2D Systolic Ar
 
 ## 1. Directory Structure
 
+Everything is self-contained under the dedicated board folders:
+
 - **`boards/pynq_z2/`** : Complete implementation for TUL PYNQ-Z2 (Zynq-7000 `xc7z020clg400-1`).
   - `board_implementation/` : Top module with ROM test matrices & status LEDs (`pynq_z2_demo_16x16_top.sv`) + master XDC constraints (`pynq_z2_constraints.xdc`).
-  - `src/` : All core synthesizable RTL modules.
-  - `sim/` : Standalone 16x16 testbench + OOP verification suite.
+  - `src/` : All core synthesizable RTL modules (`systolic_top.sv`, `systolic_array.sv`, `processing_element.sv`, `skew_buffer.sv`, `controller.sv`, `systolic_pkg.sv`).
+  - `sim/` : All simulation testbenches (`tb_step1_pe.sv` to `tb_step6_systolic_16x16.sv` + enterprise OOP suite `tb_matrix_top.sv`).
 - **`boards/basys3/`** : Complete implementation for Digilent Basys 3 (Artix-7 `xc7a35tcpg236-1`).
   - `board_implementation/` : Top module with 7-segment display + constraints (`basys3_constraints.xdc`).
   - `src/` : All core synthesizable RTL modules.
@@ -36,12 +38,12 @@ Just double-click either batch script in the `scripts/` folder:
    - For Basys 3: **`xc7a35tcpg236-1`**
 3. **Add Design Sources**: Add all files in `boards/pynq_z2/src/` plus `boards/pynq_z2/board_implementation/pynq_z2_demo_16x16_top.sv`.
 4. **Add Constraints**: Add `boards/pynq_z2/board_implementation/pynq_z2_constraints.xdc`.
-5. **Add Simulation Sources**: Add `boards/pynq_z2/sim/tb_step6_systolic_16x16.sv`.
+5. **Add Simulation Sources**: Add all files in `boards/pynq_z2/sim/`.
 6. **To Run Simulation**:
-   - Right-click `tb_step6_systolic_16x16.sv` in Sources -> **Set as Top**.
+   - In Sources -> Simulation Sources, right-click `tb_step6_systolic_16x16.sv` (or `tb_matrix_top.sv`) -> **Set as Top**.
    - Click **Run Simulation -> Run Behavioral Simulation**.
 7. **To Generate Bitstream for Hardware**:
-   - Right-click `pynq_z2_demo_16x16_top.sv` in Sources -> **Set as Top**.
+   - In Sources -> Design Sources, right-click `pynq_z2_demo_16x16_top.sv` -> **Set as Top**.
    - Click **Generate Bitstream**.
 
 See `16x16_Systolic_Array_Vivado_Simulation_Guide.pdf` for the complete guide with timing diagrams and hardware controls!
