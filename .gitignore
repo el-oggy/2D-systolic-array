@@ -24,11 +24,15 @@ greybox_tmp/
 # ==========================
 # Vivado Simulation Work Output
 # ==========================
+sim_work_*/
+boards/pynq_z2/pynq_z2_vivado_proj/
 simulation/work/
 matrix_transaction/scripts/work/
 simulation/vivado_bd_proj/
 *.jou
 *.pb
+*.wdb
+*.wcfg
 dfx_runtime.txt
 *.debug
 
