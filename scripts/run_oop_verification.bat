@@ -34,14 +34,14 @@ call xvlog --incr --relax -sv ^
     "%REPO_ROOT%\rtl\systolic_array.sv" ^
     "%REPO_ROOT%\rtl\controller.sv" ^
     "%REPO_ROOT%\rtl\systolic_top.sv" ^
-    "%REPO_ROOT%\tb\oop\matrix_if.sv" ^
-    "%REPO_ROOT%\tb\oop\MatrixTransaction.sv" ^
-    "%REPO_ROOT%\tb\oop\MatrixGenerator.sv" ^
-    "%REPO_ROOT%\tb\oop\MatrixDriver.sv" ^
-    "%REPO_ROOT%\tb\oop\MatrixMonitor.sv" ^
-    "%REPO_ROOT%\tb\oop\MatrixScoreboard.sv" ^
-    "%REPO_ROOT%\tb\oop\MatrixEnvironment.sv" ^
-    "%REPO_ROOT%\tb\oop\tb_matrix_top.sv"
+    "%REPO_ROOT%\boards\pynq_z2\sim\matrix_if.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixTransaction.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixGenerator.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixDriver.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixMonitor.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixScoreboard.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixEnvironment.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\tb_matrix_top.sv"
 if errorlevel 1 (
     echo [ERROR] Compilation failed!
     exit /b 1

@@ -15,7 +15,6 @@ Welcome! This package contains the complete, self-contained 16x16 2D Systolic Ar
   - `src/` : All core synthesizable RTL modules.
   - `sim/` : Unit testbenches (Step 1 to Step 6).
 - **`rtl/`** : Centralized synthesizable RTL source files.
-- **`tb/`** : Modular testbenches (`tb/unit/` and `tb/oop/`).
 - **`scripts/`** : One-click batch simulation scripts (`run_sim_16x16.bat`, `run_oop_verification.bat`).
 - **`docs/`** : The complete PDF guide (`16x16_Systolic_Array_Vivado_Simulation_Guide.pdf`).
 

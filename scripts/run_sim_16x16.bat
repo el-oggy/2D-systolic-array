@@ -34,7 +34,7 @@ call xvlog --incr --relax -sv ^
     "%REPO_ROOT%\rtl\systolic_array.sv" ^
     "%REPO_ROOT%\rtl\controller.sv" ^
     "%REPO_ROOT%\rtl\systolic_top.sv" ^
-    "%REPO_ROOT%\tb\unit\tb_step6_systolic_16x16.sv"
+    "%REPO_ROOT%\boards\pynq_z2\sim\tb_step6_systolic_16x16.sv"
 if errorlevel 1 (
     echo [ERROR] Compilation failed!
     exit /b 1

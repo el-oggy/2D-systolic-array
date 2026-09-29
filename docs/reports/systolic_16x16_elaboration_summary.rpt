@@ -1,8 +1,0 @@
-================================================================================
-  16x16 2D Systolic Array - Vivado Elaborated RTL Design Summary
-================================================================================
-  Target Device              : xc7a35tcpg236-1 (Artix-7 / Basys 3)
-  Top-Level Module           : systolic_top
-  Total Elaborated Instances : 18746
-  Processing Elements (PEs)  : 256 (16x16 Grid = 256 PEs)
-================================================================================
