@@ -34,14 +34,14 @@ call xvlog --incr --relax -sv ^
     "%REPO_ROOT%\rtl\systolic_array.sv" ^
     "%REPO_ROOT%\rtl\controller.sv" ^
     "%REPO_ROOT%\rtl\systolic_top.sv" ^
-    "%REPO_ROOT%\boards\pynq_z2\sim\matrix_if.sv" ^
-    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixTransaction.sv" ^
-    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixGenerator.sv" ^
-    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixDriver.sv" ^
-    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixMonitor.sv" ^
-    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixScoreboard.sv" ^
-    "%REPO_ROOT%\boards\pynq_z2\sim\MatrixEnvironment.sv" ^
-    "%REPO_ROOT%\boards\pynq_z2\sim\tb_matrix_top.sv"
+    "%REPO_ROOT%\boards\pynq_z2\sim\oops\matrix_if.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\oops\MatrixTransaction.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\oops\MatrixGenerator.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\oops\MatrixDriver.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\oops\MatrixMonitor.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\oops\MatrixScoreboard.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\oops\MatrixEnvironment.sv" ^
+    "%REPO_ROOT%\boards\pynq_z2\sim\oops\tb_matrix_top.sv"
 if errorlevel 1 (
     echo [ERROR] Compilation failed!
     exit /b 1
