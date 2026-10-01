@@ -23,8 +23,8 @@
 | `led[1]` | Single LED 1 | **P14** | LVCMOS33 | **Busy Computing (48 Cycles)** |
 | `led[2]` | Single LED 2 | **N16** | LVCMOS33 | **DONE Flag (Latched)** |
 | `led[3]` | Single LED 3 | **M14** | LVCMOS33 | **256/256 Verification PASS** |
-| `rgbled4` | RGB LED 4 | **M15, T16, Q15** | LVCMOS33 | **Core State (Blue=Idle, Amber=Busy, Green=PASS)** |
-| `rgbled5` | RGB LED 5 | **L15, F16, G14** | LVCMOS33 | **Pattern Color (Cyan, Magenta, Yellow, White)** |
+| `rgbled4` | RGB LED 4 | **N15 (R), G17 (G), L15 (B)** | LVCMOS33 | **Core State (Blue=Idle, Amber=Busy, Green=PASS)** |
+| `rgbled5` | RGB LED 5 | **M15 (R), L14 (G), G14 (B)** | LVCMOS33 | **Pattern Color (Cyan, Magenta, Yellow, White)** |
 | `uart_tx` | PMOD A Pin 1 | **Y18** | LVCMOS33 | **115200 Baud Diagnostic Reporter** |
 
 ---

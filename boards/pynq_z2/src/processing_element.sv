@@ -8,6 +8,14 @@
 //   - Passes 'a_in' horizontally (to right neighbor) delayed by 1 cycle
 //   - Passes 'b_in' vertically (to bottom neighbor) delayed by 1 cycle
 //   - Synchronous reset clears acc, a_out, and b_out
+//
+// Synthesis & Resource Mapping Notes:
+//   - On Xilinx Zynq-7000 (XC7Z020 on PYNQ-Z2), there are 220 physical DSP48E1 slices.
+//   - For a 16x16 array, there are 256 PEs (256 multipliers).
+//   - Mapping 8x8 signed multipliers into Slice LUTs (~30 LUTs/PE) is the optimal strategy
+//     because mapping 256 multipliers to DSPs would exceed the 220 DSP limit.
+//   - To explicitly force DSP48E1 mapping for smaller arrays (e.g. 8x8) or larger FPGAs:
+//       (* use_dsp = "yes" *) reg signed [2*DATA_WIDTH-1:0] acc;
 // ============================================================================
 
 module processing_element #(
