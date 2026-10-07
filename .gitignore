@@ -31,6 +31,13 @@ __pycache__/
 .venv*/
 venv/
 
+# ==========================
+# Environment & Secrets
+# ==========================
+.env
+.env.*
+*.env
+
 
 # ==========================
 # Vivado Simulation Work Output
