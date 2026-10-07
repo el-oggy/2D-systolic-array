@@ -1,361 +1,369 @@
 <p align="center">
-  <img src="2D-systolic-array/block_diagram.png" alt="2D Systolic Array Architecture" width="700"/>
+  <img src="assets/pynq_z2_routed_floorplan.png" alt="PYNQ-Z2 Routed FPGA Floorplan" width="850"/>
 </p>
 
-<h1 align="center">⚡ 2D Systolic Array — Edge AI Accelerator</h1>
+<h1 align="center">⚡ Dual-Core Adaptive 2D Systolic Array Accelerator</h1>
 
 <p align="center">
-  <strong>High-Performance N×N Matrix Multiplication Engine in Verilog & SystemVerilog for Edge AI Inference</strong>
+  <strong>High-Throughput 512-MAC Spatial Computing Architecture with Exact Signed INT8 Arithmetic, Dynamic Matrix Tiling & Real-Time Edge AI Demonstration on Xilinx Zynq-7000 (PYNQ-Z2)</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/HDL-Verilog%20%7C%20SystemVerilog-blue?style=for-the-badge&logo=v&logoColor=white" alt="Verilog"/>
-  <img src="https://img.shields.io/badge/Simulator-Icarus%20Verilog%20%7C%20Vivado-orange?style=for-the-badge" alt="Icarus Verilog"/>
-  <img src="https://img.shields.io/badge/FPGA%20Target-Digilent%20Basys%203%20(Artix--7)-red?style=for-the-badge&logo=xilinx&logoColor=white" alt="Basys 3"/>
-  <img src="https://img.shields.io/badge/Platforms-macOS%20%7C%20Windows%20%7C%20Linux-brightgreen?style=for-the-badge" alt="Platforms"/>
-  <img src="https://img.shields.io/badge/Matrix-N×N%20Configurable-purple?style=for-the-badge" alt="NxN"/>
+  <img src="https://img.shields.io/badge/FPGA%20Target-PYNQ--Z2%20(XC7Z020--1CLG400C)-red?style=for-the-badge&logo=xilinx&logoColor=white" alt="PYNQ-Z2"/>
+  <img src="https://img.shields.io/badge/Architecture-Dual%2016%C3%9716%20Mesh%20(512%20MACs)-blue?style=for-the-badge" alt="Dual 16x16"/>
+  <img src="https://img.shields.io/badge/Precision-Exact%20Signed%20INT8%20%7C%20INT20%20Acc-purple?style=for-the-badge" alt="Precision"/>
+  <img src="https://img.shields.io/badge/Frequency-100%20MHz%20Routed-brightgreen?style=for-the-badge" alt="Clock"/>
+  <img src="https://img.shields.io/badge/Verification-7%20%2F%207%20Passed%20(100%25)-success?style=for-the-badge" alt="Verification"/>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License"/></a>
 </p>
 
 <p align="center">
-  <a href="#-overview">Overview</a> •
-  <a href="#-architecture">Architecture</a> •
-  <a href="#-installation--setup">Setup Guide</a> •
-  <a href="#-simulation--verification">Simulate</a> •
-  <a href="#-fpga-deployment">FPGA</a> •
-  <a href="#-research-papers">Research</a> •
-  <a href="#-team--contributing">Team & Git</a>
+  <a href="#-problem-statement--objectives">Problem & Objectives</a> •
+  <a href="#-key-architectural-highlights">Highlights</a> •
+  <a href="#-system-architecture">Architecture</a> •
+  <a href="#-implementation--fpga-resource-utilization">FPGA Utilization</a> •
+  <a href="#-hardware-verification--test-results">Verification Results</a> •
+  <a href="#-edge-ai-application-demo">Edge AI Demo</a> •
+  <a href="#-interactive-3d-web-visualizer">Web Visualizer</a> •
+  <a href="#-repository-structure">Structure</a> •
+  <a href="#-quickstart--deployment">Quickstart</a> •
+  <a href="#-team--track-details">Team</a>
 </p>
 
 ---
 
-## 🧠 Overview
+## 🎯 Track & Problem Statement
 
-The **2D Systolic Array Accelerator** is a high-throughput, low-power spatial computing core designed for **Matrix Multiplication ($C = A \times B$)** — the foundational mathematical workload driving deep learning, convolutional neural networks (CNNs), transformers, and digital signal processing (DSP) at the edge.
+- **Hackathon Track**: Track 1 — FPGA / PYNQ-Z2 / AMD Xilinx Zynq-7000 XC7Z020
+- **Problem Statement**: **Problem #5: 2D Systolic Array-Based Processing Elements**
+- **Core Focus**: Designing an energy-efficient, high-performance spatial matrix multiplication accelerator capable of dynamic workload adaptation, zero arithmetic precision loss, and seamless hardware-software co-design for edge inference.
 
-Inspired by the spatial architecture of Google's Tensor Processing Unit (TPU), this engine delivers **maximum data reuse** and **deterministic latency** on resource-constrained embedded platforms and FPGAs.
+---
 
-### 🌟 Key Highlights
+## 🧠 Problem Statement & Objectives
 
-| Feature | Specification | Architectural Advantage |
+### The Edge AI Challenge
+Modern Convolutional Neural Networks (CNNs), Vision Transformers (ViTs), and Deep Neural Network inference workloads rely overwhelmingly on General Matrix Multiplication (**GEMM**: $C = A \times B + C$) and Matrix-Vector Multiplication (**MVM**). However, executing these layers on edge embedded platforms faces critical bottlenecks:
+1. **Underutilization on Irregular Shapes**: Traditional fixed-size systolic arrays waste substantial clock cycles on zero-padding or idling when layer dimensions ($M, K, N$) do not perfectly match the hardware grid size.
+2. **Memory Bandwidth & Routing Congestion**: Memory transfer between off-chip DRAM and the spatial compute fabric easily throttles throughput and inflates power consumption.
+3. **Severe Resource Constraints**: Edge FPGAs like the AMD Xilinx Zynq XC7Z020 have finite DSP slices (220 DSP48E1 blocks). Naive 512-PE implementations exceed available DSP resources.
+
+### Objectives Achieved
+- **Dual-Engine Spatial Fabric**: Built two parallel $16 \times 16$ systolic array engines delivering **512 physical MAC operations per cycle**.
+- **Balanced Hybrid PE Design**: Symmetrically partitioned DSP and LUT resources across both engines (**110 DSP48E1 MACs + 146 LUT MACs per engine**) to consume exactly 100% of available DSP slices (220/220) without over-allocation.
+- **Exact Signed INT8 Precision**: Implemented full signed INT8 arithmetic with 20-bit saturating accumulators and sign-extended INT32 outputs, preventing arithmetic overflow.
+- **Dynamic Dimension Adaptation & Tiling**: Hardware-level active dimension masks ($M, K, N \le 16$) and zero-padding handle tail bounds, while host software transparently tiles arbitrarily large matrices.
+- **Complete End-to-End Edge AI Demonstration**: Deployed a real-time Hand Gesture CNN on the PYNQ-Z2 board via Python AXI DMA and an interactive 3D Web visualizer.
+
+---
+
+## 🌟 Key Architectural Highlights
+
+| Specification | Implementation | Architectural Advantage |
 |---|---|---|
-| ⚡ **Compute Latency** | `3N - 1` Clock Cycles | Fully pipelined wave-front execution with zero stall bubbles |
-| 🔄 **Memory Bandwidth** | $N\times$ Data Reuse | Operands are fetched once from memory and streamed across the PE grid |
-| 📐 **Precision & Sizing** | Parameterized $N\times N$, INT8/INT16 | Configurable `DATA_WIDTH` (default 8-bit signed) with auto-sized 16-bit accumulators |
-| 🛡️ **Zero Arithmetic Overflow** | $2 \times \text{DATA\_WIDTH}$ Registers | Prevents precision degradation across deep dot-product accumulations |
-| 🎯 **FPGA Ready** | Digilent Basys 3 (Artix-7 XC7A35T) | Complete board wrapper, switch matrix selector, and 4-digit 7-segment display driver |
-| 💻 **Cross-Platform** | macOS, Windows, Linux | Verified on **Icarus Verilog (`iverilog`)**, **GTKWave**, and **AMD Vivado** |
+| **Compute Engines** | **Dual $16 \times 16$ Systolic Arrays** | Two parallel engines (Engine 0 & Engine 1) yielding **512 physical MAC units** |
+| **Operating Frequency** | **100 MHz (Closed Timing)** | Fully placed and routed on Xilinx XC7Z020 with zero negative slack |
+| **Arithmetic Precision** | **Exact Signed INT8** | 8-bit signed two's complement inputs with zero quantization loss during GEMM |
+| **Accumulator Depth** | **20-bit Accumulators** | Accommodates maximum dot-product accumulations ($16 \times 127 \times 127 = 258,096 < 2^{19}$) |
+| **Output Format** | **Sign-Extended INT32** | 256 words per tile streamed directly over AXI DMA |
+| **DSP Allocation** | **Hybrid 220 DSP + 292 LUT PEs** | 110 DSPs + 146 LUT PEs per engine (100% DSP budget utilization) |
+| **LUT Optimization** | **38,765 LUTs (27.14% reduction)** | Slashed from 53,200 baseline LUTs down to 38,765 routed LUTs |
+| **Memory System** | **Ping-Pong True Dual-Port BRAM** | Bank 0 / Bank 1 ping-pong buffering feeds both engines with continuous streaming |
+| **DMA Interface** | **AXI DMA over AXI HP0** | High-performance 32-bit streaming data path with burst size 16 |
+| **Control Interface** | **AXI4-Lite & 6 Interrupts** | Controlled by ARM Cortex-A9 Processing System (PS) |
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ System Architecture
 
-<p align="center">
-  <img src="2D-systolic-array/flowchart.png" alt="FSM Controller Flowchart" width="500"/>
-</p>
-
-### System Dataflow
+### Hardware Top-Level Block Diagram
 
 ```
-                    ┌─────────────────────────────────────────────┐
-                    │              systolic_top                    │
-                    │                                             │
-  Matrix A ──────► │  ┌────────────┐    ┌──────────────────┐     │
-  (Row Stream)      │  │ Skew Buf A │──►│                  │     │
-                    │  └────────────┘   │   N×N Systolic   │     │──► Result Matrix C
-  Matrix B ──────► │  ┌────────────┐   │      Array       │     │    (A × B)
-  (Col Stream)      │  │ Skew Buf B │──►│   (PE Grid)      │     │
-                    │  └────────────┘   └──────────────────┘     │
-                    │       ▲                    ▲                │
-  Start ─────────► │  ┌────┴────────────────────┴───┐            │
-  Pulse             │  │     FSM Controller          │──► Done Pulse
-                    │  │  IDLE → LOAD → COMPUTE → DONE │         │
-                    │  └────────────────────────────────┘         │
-                    └─────────────────────────────────────────────┘
+                              ┌─────────────────────────────────────────────────────────────┐
+                              │                    ARM Cortex-A9 (PS)                       │
+                              │           Control & Status Registers (AXI4-Lite)            │
+                              └──────────────────────────────┬──────────────────────────────┘
+                                                             │
+                              ┌──────────────────────────────▼──────────────────────────────┐
+                              │                    DDR3 System Memory                       │
+                              │       Matrices A & B (INT8)  │  Matrix C Results (INT32)    │
+                              └──────────────────────────────┬──────────────────────────────┘
+                                                             │
+                                                             │ AXI HP0 (High Performance Port)
+                                                             ▼
+                                              ┌──────────────────────────────┐
+                                              │       AXI DMA Subsystem      │
+                                              │   MM2S (In)  │  S2MM (Out)   │
+                                              └───────┬──────────────▲───────┘
+                                                      │              │
+                                         Matrix Stream│              │Result Stream
+                                                      ▼              │
+                                              ┌──────────────────────┴───────┐
+                                              │   Ping-Pong True Dual-Port   │
+                                              │          BRAM Banks          │
+                                              │       (Bank 0 / Bank 1)      │
+                                              └───────┬──────────────┬───────┘
+                                                      │              │
+                                      Feeder Stream 0 │              │ Feeder Stream 1
+                                                      ▼              ▼
+       ┌────────────────────────────────────────────────┐          ┌────────────────────────────────────────────────┐
+       │             ENGINE 0 (16×16 Mesh)              │          │             ENGINE 1 (16×16 Mesh)              │
+       │           256 Processing Elements              │          │           256 Processing Elements              │
+       ├────────────────────────────────────────────────┤          ├────────────────────────────────────────────────┤
+       │  • 110 DSP48E1 PEs + 146 Distributed LUT PEs   │          │  • 110 DSP48E1 PEs + 146 Distributed LUT PEs   │
+       │  • Triangular Skew Buffers (A: Rows, B: Cols)  │          │  • Triangular Skew Buffers (A: Rows, B: Cols)  │
+       │  • INT8 MAC Multipliers + 20-bit Accumulators  │          │  • INT8 MAC Multipliers + 20-bit Accumulators  │
+       │  • Result Capture Unit (INT20 -> INT32)        │          │  • Result Capture Unit (INT20 -> INT32)        │
+       └────────────────────────────────────────────────┘          └────────────────────────────────────────────────┘
+                               Total Across Both Engines: 512 Physical MAC PEs (220 DSP48E1 + 292 LUT PEs)
 ```
 
-### Module Hierarchy
+### End-to-End 10-Step Compute Workflow
 
-| Module | Verilog (`.v`) | SystemVerilog (`.sv`) | Core Role |
-|---|---|---|---|
-| **Processing Element (PE)** | [`1_pe.v`](./2D-systolic-array/1_pe.v) | [`processing_element.sv`](./simulation/src/processing_element.sv) | Multiply-Accumulate unit (`acc += a * b`) with 1-cycle pipeline forwarding |
-| **Systolic Array** | [`3_systolic_array.v`](./2D-systolic-array/3_systolic_array.v) | [`systolic_array.sv`](./simulation/src/systolic_array.sv) | Parametric $N \times N$ 2D spatial grid with automated interconnect routing |
-| **Skew Buffer** | [`5_skew_buffer.v`](./2D-systolic-array/5_skew_buffer.v) | [`skew_buffer.sv`](./simulation/src/skew_buffer.sv) | Triangular delay lines ($0, 1, \dots, N-1$ delays) for wave-front timing |
-| **Controller** | [`6_controller.v`](./2D-systolic-array/6_controller.v) | [`controller.sv`](./simulation/src/controller.sv) | 4-state deterministic FSM sequencing execution phases and handshakes |
-| **Top Wrapper** | [`7_systolic_top.v`](./2D-systolic-array/7_systolic_top.v) | [`systolic_top.sv`](./simulation/src/systolic_top.sv) | Integrated hardware accelerator top-level system |
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Host as ARM PS / Python Runtime
+    participant DDR as DDR3 Memory
+    participant DMA as AXI DMA Engine
+    participant BRAM as Ping-Pong BRAM
+    participant Core as Dual 16x16 Engines
+    participant Out as Output Stream FIFO
+
+    Host->>DDR: 1. Quantize weights & activations to signed INT8; determine M, K, N
+    Host->>Core: 2. Write tile configuration & active mask via AXI4-Lite
+    Host->>DMA: 3. Initiate AXI DMA MM2S transfer from DDR3
+    DMA->>BRAM: 4. Stream 32-bit burst-16 data into active Ping-Pong BRAM Bank
+    BRAM->>Core: 5. Stream A/B operands through triangular skew delay buffers
+    Core->>Core: 6. Execute 2D wave-front MAC operations across 512 PEs simultaneously
+    Core->>Out: 7. Capture tile results: convert INT20 accumulators to INT32
+    Out->>DMA: 8. Drain INT32 result words into AXI DMA S2MM stream
+    DMA->>DDR: 9. Write completed matrix C tile directly into DDR3 result buffer
+    DDR->>Host: 10. Dequantize, apply bias & activation function; proceed to next layer
+```
 
 ---
 
-## 🛠️ Installation & Setup
+## 📊 Implementation & FPGA Resource Utilization
 
-### 1. Clone the Repository Locally
-To run the simulations, you must clone the repository to your local machine (simulations cannot be run directly on GitHub).
+The design was fully synthesized, implemented, and closed for timing at **100 MHz** on the **Xilinx Zynq-7000 XC7Z020-1CLG400C** FPGA using AMD Vivado.
+
+### Implementation Optimization Progress
+- **Baseline Synthesis**: 53,200 LUTs (exceeded slice floorplan limits).
+- **Optimized Synthesis**: **38,765 LUTs** — achieved a **27.14% reduction in LUT utilization** through hybrid DSP/LUT logic mapping and unified BRAM feeder sharing.
+
+### Post-Route Resource Utilization Table (from Vivado Implementation Reports)
+
+| Resource Type | Used | Available | Utilization Percentage | Status / Notes |
+|---|---|---|---|---|
+| **LUT (Look-Up Tables)** | **38,765** | 53,200 | **72.86%** | Optimized hybrid PE mapping (27.14% reduction) |
+| **LUTRAM (Distributed RAM)** | **1,152** | 17,400 | **6.62%** | Skew buffers and small delay FIFO lines |
+| **FF (Flip-Flops)** | **33,325** | 106,400 | **31.32%** | Pipeline registers, accumulators, and valid tags |
+| **DSP48E1 Slices** | **220** | 220 | **100.00%** | 110 DSPs allocated to Engine 0, 110 to Engine 1 |
+| **BRAM36 Equivalents** | **18** | 140 | **12.85%** | Ping-Pong input banks and output stream queues |
+| **Slices** | **12,043** | 13,300 | **90.55%** | Placed across clock regions X0Y0 to X1Y2 |
+| **Clock Frequency** | **100.0 MHz** | — | **10.00 ns** | **WNS > 0.00 ns (Zero timing violations)** |
+
+---
+
+## 🧪 Hardware Verification & Test Results
+
+The architecture underwent extensive self-checking testbench simulations (SystemVerilog) and physical hardware-in-the-loop test runs on the PYNQ-Z2 board. All 7 benchmark test suites passed with 100% bit-exact accuracy against NumPy double-precision golden models.
+
+### Verification Results Table (Exact Hardware Test Data)
+
+| Test Suite | Matrix Size ($M \times K \times N$) | Output Vector $y$ / Matrix Sample | Expected Output | Status |
+|---|---|---|---|:---:|
+| `identity_4` | $4 \times 4$ | `[3, -1, 4, 2]` | `[3, -1, 4, 2]` | ✔ **PASS** |
+| `zero_4` | $4 \times 4$ | `[0, 0, 0, 0]` | `[0, 0, 0, 0]` | ✔ **PASS** |
+| `negative_4` | $4 \times 4$ | `[10, 18, 26, 34]` | `[10, 18, 26, 34]` | ✔ **PASS** |
+| `random_4` | $4 \times 4$ | `[33, 11, 51, 19]` | `[33, 11, 51, 19]` | ✔ **PASS** |
+| `random_8` | $8 \times 8$ | `[-33, -2, -5, -111, 83, 46, 34, -64]` | `[-33, -2, -5, -111, 83, 46, 34, -64]` | ✔ **PASS** |
+| `random_16_scalability` | $16 \times 16$ | `[-14, -28, 96, … 218 … -40]` | Matches golden 16×16 GEMM | ✔ **PASS** |
+| `max_values_4` | $4 \times 4$ | `[64516, 64516, 64516, 64516]` | `[64516, 64516, 64516, 64516]` | ✔ **PASS** |
+
+### Key Verification Takeaways
+1. **100% Pass Rate (7 / 7 Cases)**: Flawless arithmetic correctness across zero, identity, negative, random, and boundary-value matrices.
+2. **Dynamic Scaling ($4 \times 4 \to 16 \times 16$)**: Hardware masks dynamically active rows and columns, verifying zero-bubble tail execution.
+3. **Overflow Immunity**: The `max_values_4` stress test (saturating all 8-bit inputs) achieved `64,516`, proving the 20-bit accumulators prevent overflow under extreme dynamic range.
+
+---
+
+## ✋ Edge AI Application: Real-Time Hand Gesture CNN Demo
+
+To demonstrate real-world edge acceleration beyond synthetic benchmarks, we developed an end-to-end edge vision pipeline that maps convolutional inference onto the systolic accelerator:
+
+- **Model**: **HandNet INT8**, a calibrated tiny convolutional neural network trained for low-latency hand gesture recognition.
+- **Workflow**:
+  1. Live video feed captured from webcam via OpenCV.
+  2. Hand bounding box and landmarks localized in real time.
+  3. Feature maps transformed to matrix patches using an optimized `im2col` pipeline.
+  4. Matrix multiplication ($C = A \times B$) offloaded to the **Dual 16×16 Systolic Array** via the PYNQ overlay driver.
+  5. Classified gestures (Fist, Open Hand, Thumbs Up, Peace, Pointing, OK) displayed with real-time hardware inference latency.
+
+The demo application scripts and calibrated models are located in [`applications/hand_gesture/`](./applications/hand_gesture/).
+
+---
+
+## 🌐 Interactive 3D Web Visualizer
+
+We built a full-featured, interactive 3D Web Visualizer powered by **Three.js** that connects directly to the PYNQ-Z2 hardware bridge:
+
+- **3D Spatial Mesh Animation**: Real-time 3D visualization of matrix operands $A$ and $B$ propagating along the systolic wave-front through each PE.
+- **Interactive Matrix Editor**: Input custom $M \times K \times N$ matrices and inspect intermediate accumulator values cycle by cycle.
+- **Hardware Bridge**: Connects over WebSocket / HTTP to `bridge/server.py` on the PYNQ board to run live on-board execution and compare FPGA results with browser-side software emulation.
+- **Quick Launch**: Located in [`webpage/`](./webpage/) — run [`OPEN_WEBPAGE.bat`](./webpage/OPEN_WEBPAGE.bat) to launch instantly.
+
+---
+
+## 📁 Repository Structure
+
+```
+.
+├── applications/
+│   └── hand_gesture/                 # End-to-end HandNet INT8 edge vision demo
+│       ├── full_screen_hand_tracker.py
+│       ├── gesture_classifier.py
+│       ├── hand_gesture_engine.py
+│       ├── im2col.py
+│       ├── models/                   # Calibrated INT8 weights & gesture models
+│       └── START_HARDWARE_GESTURE_DEMO.bat
+├── assets/
+│   ├── NEXT_IN_Presentation.pptx     # Complete Hackathon Final Presentation Deck
+│   ├── pynq_z2_routed_floorplan.png  # Vivado routed device floorplan (XC7Z020)
+│   ├── 2D Systolic array.pdf
+│   └── Edge_AI_Hackathon_Brochure.pdf
+├── boards/
+│   ├── basys3/                       # Baseline Basys 3 (Artix-7) implementation
+│   │   ├── board_implementation/
+│   │   ├── sim/
+│   │   └── src/
+│   └── pynq_z2/                      # Production Dual 16×16 PYNQ-Z2 Implementation
+│       ├── bitstream/                # Ready-to-flash bitstream & hardware handoff
+│       │   ├── adaptive_gemm.bit     # Fully routed 100 MHz bitstream
+│       │   ├── adaptive_gemm.hwh     # Hardware handoff specification
+│       │   └── optimization_candidate.bit
+│       ├── board_implementation/
+│       │   ├── constraints/          # Pinouts and out-of-context XDC constraints
+│       │   └── vivado/               # Block design & bitstream build TCL scripts
+│       ├── pynq/                     # Host Python driver, notebooks, & test cases
+│       │   ├── adaptive_gemm.py      # Core AXI DMA systolic array Python driver
+│       │   ├── adaptive_gemm_notebook.ipynb
+│       │   ├── benchmark_power.py    # Power & throughput benchmarking
+│       │   ├── cases.json            # 7 verification test matrices
+│       │   ├── pynq_gesture_server.py
+│       │   └── run_cases.py          # Automated verification test runner
+│       ├── sim/                      # SystemVerilog testbenches & regression scripts
+│       │   ├── run_regressions.ps1
+│       │   ├── tb_accel_dual_engine_top.sv
+│       │   ├── tb_adaptive_gemm.sv
+│       │   ├── tb_pe_mac.sv
+│       │   └── tb_ping_pong_bram.sv
+│       └── src/                      # Complete Synthesizable SystemVerilog RTL
+│           ├── accel_dual_axi_top.sv # AXI4-Lite + AXI DMA Top
+│           ├── accel_dual_engine_top.sv # Dual 16×16 engine integrator
+│           ├── accel_dual_tile_core.sv
+│           ├── c_buf.sv
+│           ├── dual_systolic_array.sv
+│           ├── pe_mac.sv             # Hybrid DSP48E1 / LUT PE
+│           ├── ping_pong_bram.sv     # True dual-port input buffer
+│           ├── single_tile_controller.sv
+│           ├── skew_buffers.sv       # Triangular delay line
+│           ├── systolic_array.sv     # 16×16 systolic mesh
+│           └── unified_bram_feeder.sv
+├── docs/                             # Official Technical Documents & Reports
+│   ├── 16x16_Systolic_Array_Vivado_Simulation_Guide.pdf
+│   ├── 2D_Systolic_Array_Innovation_Ideas_Report.pdf
+│   ├── 2D_Systolic_Array_Vivado_Complete_Guide.pdf
+│   ├── EDGE-AI_NEXT_IN_Project_Presentation.pdf
+│   ├── Edge_AI_Hackathon_2026_Technical_Report.pdf  # Comprehensive technical report
+│   └── Literature Survey - 2D Systolic Array-Based Processing Elements.pdf
+├── research_papers/                  # Foundational Literature & Architecture Papers
+│   ├── 04_Jouppi2017_TPUv1.pdf
+│   ├── 05_Jouppi2023_TPUv4.pdf
+│   ├── 06_Chen2019_EyerissV2.pdf
+│   ├── 08_Qin2020_SIGMA.pdf
+│   ├── 09_Genc2021_Gemmini.pdf
+│   ├── 10_Samajdar2020_SCALESim.pdf
+│   └── ...
+├── webpage/                          # Interactive 3D Three.js Web Visualizer
+│   ├── bridge/                       # Python WebSocket / HTTP bridge server
+│   ├── css/
+│   ├── js/
+│   ├── index.html
+│   └── OPEN_WEBPAGE.bat
+├── LICENSE                           # MIT License
+└── README.md
+```
+
+---
+
+## 🚀 Quickstart & Deployment
+
+### 1. Flash & Run on PYNQ-Z2 Board
+If you have a PYNQ-Z2 board connected via Ethernet or USB:
 
 ```bash
-git clone https://github.com/<your-username>/2D-systolic-array.git
-cd 2D-systolic-array
+# SSH into the PYNQ board
+ssh xilinx@192.168.2.99
+
+# Clone or copy repository to the board
+cd /home/xilinx/
+git clone https://github.com/el-oggy/2D-systolic-array-.git
+cd 2D-systolic-array-/boards/pynq_z2/pynq
+
+# Run automated 7/7 test suite
+python3 run_cases.py
 ```
-*(If you forked the repository, replace `<your-username>` with your GitHub username).*
 
-### 2. Install Simulator Dependencies
-Expand your operating system below for 1-click installation commands and environment variable setup for Icarus Verilog and GTKWave:
+### 2. Run Python Interactive Jupyter Notebook
+1. Open your browser and navigate to `http://192.168.2.99:9090` (password: `xilinx`).
+2. Open [`boards/pynq_z2/pynq/adaptive_gemm_notebook.ipynb`](./boards/pynq_z2/pynq/adaptive_gemm_notebook.ipynb).
+3. Execute the cells to inspect matrix quantization, AXI DMA transfers, and cycle timing.
 
-<details>
-<summary><b>🍎 macOS Setup (MacBook Pro / Air — Apple Silicon M1/M2/M3/M4 & Intel)</b></summary>
-
-<br>
-
-#### 1. Install Homebrew (if not already installed)
+### 3. Launch 3D Three.js Web Visualizer
+On Windows, simply double-click:
+```bat
+webpage\OPEN_WEBPAGE.bat
+```
+Or start the bridge server and open in any modern browser:
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+python webpage/bridge/server.py
+# Open webpage/index.html in your browser
 ```
 
-#### 2. Ensure Homebrew is in your Shell PATH
+### 4. Run Edge AI Gesture Recognition Demo
+```bat
+applications\hand_gesture\START_HARDWARE_GESTURE_DEMO.bat
+```
+
+### 5. Rebuild Vivado Bitstream from Scratch
+If you wish to re-synthesize and implement the dual-engine design in AMD Vivado (2022.2 or later):
 ```bash
-# For Apple Silicon (M1/M2/M3/M4):
-(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# For Intel Macs:
-(echo; echo 'eval "$(/usr/local/bin/brew shellenv)"') >> ~/.zprofile
-eval "$(/usr/local/bin/brew shellenv)"
-```
-
-#### 3. Install Icarus Verilog & GTKWave
-```bash
-brew install icarus-verilog
-brew install --cask gtkwave
-```
-
-> [!TIP]
-> **Fixing macOS Gatekeeper for GTKWave:**  
-> If macOS blocks GTKWave (*"unidentified developer"*), run:  
-> `sudo xattr -d com.apple.quarantine /Applications/gtkwave.app`  
-> *(Or use the **WaveTrace (Waveform Viewer)** extension directly inside VS Code).*
-
-#### 4. Verify Installation
-```bash
-iverilog -v && vvp -v
-```
-
-</details>
-
-<details>
-<summary><b>🪟 Windows Setup (with PATH Troubleshooting Guide)</b></summary>
-
-<br>
-
-#### 1. Download & Install Icarus Verilog
-1. Download the Windows installer from [bleyer.org/icarus](http://bleyer.org/icarus/) (e.g. `iverilog-v12-20220611-x64_setup.exe`).
-2. Run the installer and check the box: ☑ **"Add executable folder(s) to system PATH"**.
-3. Complete installation to `C:\iverilog`.
-
-#### 2. Troubleshooting: If `'iverilog' is not recognized`
-If your terminal cannot find `iverilog`, add the binaries to your Windows PATH:
-
-* **Method A (GUI):**
-  1. Press `Win + R`, type `sysdm.cpl`, press Enter.
-  2. Go to **Advanced** → **Environment Variables...**.
-  3. Under *User* or *System* variables, select `Path` → click **Edit...**.
-  4. Click **New** and add: `C:\iverilog\bin`
-  5. Click **New** again and add: `C:\iverilog\gtkwave\bin`
-  6. Click **OK** on all windows and **restart VS Code / Terminal**.
-
-* **Method B (PowerShell One-Liner as Admin):**
-  ```powershell
-  [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\iverilog\bin;C:\iverilog\gtkwave\bin", [System.EnvironmentVariableTarget]::Machine)
-  ```
-
-#### 3. Verify Installation
-```powershell
-iverilog -v
-vvp -v
-```
-
-</details>
-
-<details>
-<summary><b>🐧 Linux Setup (Ubuntu / Debian / Fedora / Arch)</b></summary>
-
-<br>
-
-```bash
-# Ubuntu / Debian / Linux Mint:
-sudo apt update && sudo apt install -y iverilog gtkwave
-
-# Fedora / RHEL:
-sudo dnf install -y iverilog gtkwave
-
-# Arch Linux / Manjaro:
-sudo pacman -S iverilog gtkwave
-
-# Verify:
-iverilog -v && which iverilog
-```
-
-</details>
-
----
-
-## 🔬 Simulation & Verification
-
-Every testbench in this project is verified and automated. Choose your desired test suite:
-
-### 📁 Suite 1: Core Verilog RTL (`2D-systolic-array/`)
-
-Navigate to the directory containing the core Verilog files:
-```powershell
-cd 2D-systolic-array
-```
-
-#### 1. PE Unit Test
-Validates the single Multiply-Accumulate (MAC) unit and 1-cycle forwarding.
-```powershell
-iverilog -g2012 -o pe_tb.vvp 1_pe.v 2_pe_tb.v
-vvp pe_tb.vvp
-gtkwave pe_tb.vcd
-```
-
-#### 2. 2×2 Systolic Grid Test
-Validates 2D wave-front propagation across 4 PEs with manual skewing.
-```powershell
-iverilog -g2012 -o systolic_2x2_tb.vvp 1_pe.v 3_systolic_array.v 4_systolic_2x2_tb.v
-vvp systolic_2x2_tb.vvp
-gtkwave systolic_2x2_tb.vcd
-```
-
-#### 3. Full 4×4 System Test
-Tests the full autonomous accelerator (Controller + Skew Buffers + 16 PEs).
-```powershell
-iverilog -g2012 -o systolic_4x4_tb.vvp 1_pe.v 3_systolic_array.v 5_skew_buffer.v 6_controller.v 7_systolic_top.v 8_systolic_4x4_tb.v
-vvp systolic_4x4_tb.vvp
-gtkwave systolic_4x4_tb.vcd
+cd boards/pynq_z2/board_implementation/vivado
+vivado -mode batch -source block_design.tcl
+vivado -mode batch -source synth_accel.tcl
+vivado -mode batch -source run_full_bitstream.tcl
 ```
 
 ---
 
-### 📁 Suite 2: Advanced SystemVerilog & Vivado Suite (`simulation/`)
+## 👥 Team & Track Details
 
-> [!NOTE]
-> SystemVerilog files (`.sv`) require the **`-g2012`** flag in Icarus Verilog.
+**Track 1**: FPGA / PYNQ-Z2 / AMD Xilinx Zynq-7000 XC7Z020  
+**Problem Statement**: Problem #5: 2D Systolic Array-Based Processing Element  
 
-```bash
-cd simulation
-```
-
-<details>
-<summary><b>View SystemVerilog Testbench Commands (Steps 1 to 5)</b></summary>
-
-<br>
-
-* **Step 1 — Processing Element:**
-  ```bash
-  iverilog -g2012 -o tb_step1_pe.vvp src/processing_element.sv sim/tb_step1_pe.sv && vvp tb_step1_pe.vvp
-  ```
-* **Step 2 — 2×2 Systolic Array Grid:**
-  ```bash
-  iverilog -g2012 -o tb_step2_2x2.vvp src/processing_element.sv src/systolic_array.sv sim/tb_step2_systolic_2x2.sv && vvp tb_step2_2x2.vvp
-  ```
-* **Step 3 — Input Skew Buffer Delay Line:**
-  ```bash
-  iverilog -g2012 -o tb_step3_skew.vvp src/skew_buffer.sv sim/tb_step3_skew_buffer.sv && vvp tb_step3_skew.vvp
-  ```
-* **Step 4 — Full 4×4 Autonomous Top System:**
-  ```bash
-  iverilog -g2012 -o tb_step4_4x4.vvp src/processing_element.sv src/systolic_array.sv src/skew_buffer.sv src/controller.sv src/systolic_top.sv sim/tb_step4_systolic_4x4.sv && vvp tb_step4_4x4.vvp
-  ```
-* **Step 5 — Extended 8×8 Systolic Array (64 PEs):**
-  ```bash
-  iverilog -g2012 -o tb_step5_8x8.vvp src/processing_element.sv src/systolic_array.sv src/skew_buffer.sv src/controller.sv src/systolic_top.sv sim/tb_step5_systolic_8x8.sv && vvp tb_step5_8x8.vvp
-  ```
-
-</details>
-
----
-
-## 🎯 FPGA Deployment (Digilent Basys 3)
-
-The design is synthesizable and tested for the **Xilinx Artix-7 (XC7A35T-1CPG236C)** FPGA.
-
-* **FPGA Top Wrapper:** [`simulation/fpga_basys3/basys3_demo_top.sv`](./simulation/fpga_basys3/basys3_demo_top.sv)  
-  *Includes on-chip ROM matrix storage, button triggers, and slide switch matrix index selectors.*
-* **7-Segment Display Controller:** [`simulation/fpga_basys3/seven_segment_ctrl.sv`](./simulation/fpga_basys3/seven_segment_ctrl.sv)  
-  *Displays computed 16-bit output matrix values in hexadecimal format across 4 multiplexed digits.*
-* **Physical Constraints:** [`simulation/fpga_basys3/basys3_constraints.xdc`](./simulation/fpga_basys3/basys3_constraints.xdc)  
-  *Complete pin mappings for 100MHz system clock, pushbuttons, LEDs, slide switches, and 7-segment cathodes/anodes.*
-* 📖 **Hardware & Vivado Manual:** [[Download Complete Vivado Guide PDF](./assets/2D_Systolic_Array_Vivado_Complete_Guide.pdf)]
-
----
-
-## 🧪 Verification Matrix
-
-| Test Suite | Scope | Inputs / Dimensions | Test Status |
-|---|---|---|---|
-| **PE Unit Test** | Atomic MAC math, zero-reset, forwarding registers | Scalar dot-product $[1,2,3] \cdot [7,10,13] = 66$ | ✅ **PASS** |
-| **2×2 Systolic Grid** | Spatial wave-front dataflow & diagonal accumulation | 2×2 Dense Matrix Multiplication | ✅ **PASS** |
-| **Skew Buffer** | Triangular delay line timing ($0, 1, \dots, N-1$) | 3×3 Staggered Matrix Conversion | ✅ **PASS** |
-| **Identity GEMM** | Autonomous FSM + Skew Buffers | $A \times I = A$ (4×4 & 8×8) | ✅ **PASS** |
-| **Scalar Scaling** | Arithmetic linearity & precision verification | $A \times 2I = 2A$ | ✅ **PASS** |
-| **Dense GEMM** | Arbitrary signed integer multiplication vs Golden Model | 4×4 & 8×8 Random Signed Matrices | ✅ **PASS** |
-
----
-
-## 📚 Research Papers
-
-The architecture is built on foundational and cutting-edge academic literature located in [`research_papers/`](./research_papers/):
-
-1. **MPX: A Unified Systolic Array for Matrix and Polynomial Multiplication** — George Alexakis, Dimitrios Schoinianakis, Giorgos Dimitrakopoulos (*Democritus Univ. & Nokia Bell Labs*). [[PDF](./research_papers/EXTRA_Alexakis2026_MPX_UnifiedSystolicArray.pdf)]
-2. **Systolic Array Based Accelerator and Algorithm Mapping for Deep Learning** — Zhijie Yang et al. (*Springer CCF-THPC*). [[PDF](./research_papers/EXTRA_Yang2018_SystolicArray_AcceleratorMapping.pdf)]
-3. **Photonic Systolic Array for All-Optical Matrix–Matrix Multiplication** — Jungmin Kim, Qingyi Zhou, Zongfu Yu (*Laser & Photonics Reviews, 2025/2026*). [[PDF](./research_papers/EXTRA_Kim2025_Photonic_Systolic_Array.pdf)]
-4. **Literature Survey - 2D Systolic Array-Based Processing Elements** [[PDF](./Literature%20Survey%20-%202D%20Systolic%20Array-Based%20Processing%20Elements.pdf)]
-5. **2D Systolic Array Innovation Ideas Report** [[PDF](./2D_Systolic_Array_Innovation_Ideas_Report.pdf)]
-
-> [!TIP]
-> **Adding Future Research Papers:**  
-> Drop new `.pdf` files into [`research_papers/`](./research_papers/), add a brief summary to [`research_papers/README.md`](./research_papers/README.md), and reference them in this section.
-
----
-
-## 🤝 Team & Contributing
-
-### Team Members
-
-| Member | Role |
+| Team Member | Registration Number |
 |---|---|
-| **Adarsh** | Systolic Core |
-| **Ghulam** | Integration, Baseline & Silicon |
-| **Yaminee** | Evaluation & Reporting |
-| **Arpita** | Workload & Verification Data |
-| **Srikanta** | Adaptive Control Path |
-
-### 🌿 Git Branching Workflow
-
-```
-main (protected — stable releases only)
-  └── feature/<name>/<task-description>  ──► Open Pull Request (PR) for Review
-```
-
-```bash
-# 1. Pull latest main
-git checkout main && git pull origin main
-
-# 2. Create your feature branch
-git checkout -b feature/<your-name>/<feature-name>
-
-# 3. Commit and push
-git add . && git commit -m "feat: add systolic optimization"
-git push origin feature/<your-name>/<feature-name>
-```
+| **Adarsh Swarup Maharana** | `#2301109373` |
+| **Arpita Mishra** | `#2301109371` |
+| **Ashishayan Pattanyak** | `#2301109373` |
+| **Ghulam Qadir** | `#2301109391` |
+| **Srikanta Behera** | `#2301109427` |
 
 ---
 
-## 📜 License
+## 📜 License & Acknowledgments
 
-This project is licensed under the **MIT License** — see the [`LICENSE`](./LICENSE) file for details.
-
----
-
-<p align="center">
-  <strong>Built with 💡 for Edge AI Hackathon 2026</strong><br/>
-  <sub>Accelerating AI at the Edge — One Systolic Array at a Time</sub>
-</p>
+This project is open-source under the [MIT License](./LICENSE).  
+Architecture inspired by foundational research from Google TPU (Jouppi et al.), MIT Eyeriss V2 (Chen et al.), and UC Berkeley Gemmini (Genc et al.). All cited works are archived in [`research_papers/`](./research_papers/).
