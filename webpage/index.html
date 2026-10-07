@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#FFF7E9">
+    <title>Adaptive Systolic Array Lab</title>
+    <link rel="stylesheet" href="./css/main.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Adaptive Systolic Array Lab home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span><span class="brand-kicker">HARDWARE WORKSPACE</span><strong>Adaptive Systolic Array Lab</strong></span>
+        </a>
+        <div class="connection-tools">
+          <label class="bridge-url-label" for="bridge-url">BRIDGE URL</label>
+          <input id="bridge-url" class="bridge-url" type="url" spellcheck="false" placeholder="Same origin or http://board-ip:8765" aria-label="Hardware bridge URL">
+          <button id="connect-button" class="button button-quiet" type="button">Connect</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="intro-row">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> LOCAL FPGA CONTROL</p>
+            <h1>Compute at the edge.</h1>
+            <p class="intro-copy">Shape a matrix job, send it to the PYNQ-Z2, and inspect the result returned by the hardware.</p>
+          </div>
+          <div class="status-strip" aria-label="Hardware connection status">
+            <div class="status-card">
+              <span class="status-label">BRIDGE</span>
+              <strong id="bridge-state" class="status-value"><span class="status-dot"></span>Not connected</strong>
+              <small id="bridge-detail">Waiting for status</small>
+            </div>
+            <div class="status-card">
+              <span class="status-label">PYNQ-Z2</span>
+              <strong id="board-state" class="status-value"><span class="status-dot"></span>Unverified</strong>
+              <small id="board-detail">No hardware response</small>
+            </div>
+            <div class="status-card">
+              <span class="status-label">FPGA OVERLAY</span>
+              <strong id="overlay-state" class="status-value"><span class="status-dot"></span>Not loaded</strong>
+              <small id="overlay-detail">Initialize to check</small>
+            </div>
+          </div>
+        </section>
+
+        <div class="toolbar">
+          <div class="operation-readout">
+            <span class="status-label">OPERATION</span>
+            <strong id="operation-state">Waiting for bridge</strong>
+          </div>
+          <div class="toolbar-actions">
+            <span id="mode-chip" class="mode-chip mode-unavailable">HARDWARE · UNAVAILABLE</span>
+            <button id="initialize-button" class="button button-secondary" type="button" disabled>Initialize overlay</button>
+            <button id="reset-button" class="button button-quiet" type="button" disabled>Reset hardware</button>
+          </div>
+        </div>
+
+        <section class="workbench">
+          <aside class="input-panel panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">01 / INPUT</p>
+                <h2>Matrix job</h2>
+              </div>
+              <button id="example-button" class="text-button" type="button">Load example</button>
+            </div>
+            <div class="equation" aria-label="Matrix A multiplied by matrix B produces matrix C">
+              <span>A <small>M × K</small></span><b>×</b><span>B <small>K × N</small></span><b>=</b><span>C <small>M × N</small></span>
+            </div>
+
+            <div class="preset-card">
+              <div class="preset-card-head">
+                <p class="eyebrow">QUICK PRESETS &amp; CASES.JSON</p>
+                <strong>Instant Test Data Presets</strong>
+              </div>
+              <select id="preset-selector" class="preset-select" aria-label="Select test preset">
+                <option value="">— Select a Test Case or Shape —</option>
+                <optgroup label="Test Cases from cases.json">
+                  <option value="case1">Case 1: Identity 4×4 × Vector [3, -1, 4, 2]</option>
+                  <option value="case2">Case 2: Zero 4×4 × Vector [9, 9, 9, 9]</option>
+                  <option value="case3">Case 3: Negative 4×4 × Vector [1, -2, 3, -4]</option>
+                  <option value="case4">Case 4: Random 4×4 × Vector [-5, 1, -2, -8]</option>
+                  <option value="case5">Case 5: Random 8×8 × Vector [0, -5, -7, 6...]</option>
+                  <option value="case6">Case 6: Random 16×16 × Vector [-7, 5, -3...]</option>
+                  <option value="case7">Case 7: Max Values 4×4 (Extreme 127s)</option>
+                  <option value="pipe3">Pipeline Test: 16×16 × 3 Vectors (16×3)</option>
+                </optgroup>
+                <optgroup label="Standard Matrix Multiplications">
+                  <option value="mat4x4">4×4 Matrix × 4×4 Matrix</option>
+                  <option value="mat8x8">8×8 Matrix × 8×8 Matrix</option>
+                  <option value="mat16x16">16×16 Full Systolic Tile (512 MACs, 220 DSPs)</option>
+                </optgroup>
+              </select>
+              <div class="quick-size-row">
+                <span class="quick-label">Shapes:</span>
+                <button type="button" class="button-tag" data-size="4x1">4×1 Vec</button>
+                <button type="button" class="button-tag" data-size="4x4">4×4</button>
+                <button type="button" class="button-tag" data-size="8x8">8×8</button>
+                <button type="button" class="button-tag" data-size="16x1">16×1 Vec</button>
+                <button type="button" class="button-tag" data-size="16x16">16×16</button>
+              </div>
+              <div class="quick-fill-row">
+                <span class="quick-label">Quick Fill:</span>
+                <button id="btn-fill-rand" type="button" class="button-tag button-tag-rand">🎲 Random</button>
+                <button id="btn-fill-eye" type="button" class="button-tag">⚡ Identity</button>
+                <button id="btn-fill-ones" type="button" class="button-tag">1️⃣ Ones</button>
+                <button id="btn-fill-zeros" type="button" class="button-tag">0️⃣ Zeros</button>
+              </div>
+            </div>
+
+            <div class="matrix-card" data-matrix="A">
+              <div class="matrix-card-head">
+                <div class="matrix-symbol">A</div>
+                <div><strong>Left operand</strong><small>Signed INT8 · −128 to 127</small></div>
+                <span class="matrix-dims" data-role="shape">2 × 2</span>
+              </div>
+              <div class="dimension-row">
+                <label>Rows <input data-role="rows" type="number" min="1" step="1" value="2" aria-label="Matrix A rows"></label>
+                <span>×</span>
+                <label>Columns <input data-role="cols" type="number" min="1" step="1" value="2" aria-label="Matrix A columns"></label>
+              </div>
+              <div class="matrix-scroll"><div class="matrix-grid" data-role="grid" aria-label="Matrix A values"></div></div>
+              <details class="paste-details">
+                <summary>Paste matrix values</summary>
+                <textarea data-role="paste" rows="3" spellcheck="false" placeholder="1, -2, 3&#10;4, 5, -6" aria-label="Paste matrix A values"></textarea>
+                <button data-role="apply-paste" class="text-button" type="button">Apply pasted values</button>
+              </details>
+            </div>
+
+            <div class="matrix-card" data-matrix="B">
+              <div class="matrix-card-head">
+                <div class="matrix-symbol matrix-symbol-alt">B</div>
+                <div><strong>Right operand</strong><small>Signed INT8 · −128 to 127</small></div>
+                <span class="matrix-dims" data-role="shape">2 × 2</span>
+              </div>
+              <div class="dimension-row">
+                <label>Rows <input data-role="rows" type="number" min="1" step="1" value="2" aria-label="Matrix B rows"></label>
+                <span>×</span>
+                <label>Columns <input data-role="cols" type="number" min="1" step="1" value="2" aria-label="Matrix B columns"></label>
+              </div>
+              <div class="matrix-scroll"><div class="matrix-grid" data-role="grid" aria-label="Matrix B values"></div></div>
+              <details class="paste-details">
+                <summary>Paste matrix values</summary>
+                <textarea data-role="paste" rows="3" spellcheck="false" placeholder="1, 2&#10;3, 4" aria-label="Paste matrix B values"></textarea>
+                <button data-role="apply-paste" class="text-button" type="button">Apply pasted values</button>
+              </details>
+            </div>
+
+            <div class="tile-controls">
+              <div class="subsection-heading">
+                <div><p class="eyebrow">TILE CONFIGURATION</p><strong>Active mesh region</strong></div>
+                <span class="info-mark" title="The host driver tiles larger matrices into supported hardware jobs.">i</span>
+              </div>
+              <div class="dimension-row active-row">
+                <label>Active rows <input id="active-m" type="number" min="1" max="16" step="1" value="16"></label>
+                <span>×</span>
+                <label>Active columns <input id="active-n" type="number" min="1" max="16" step="1" value="16"></label>
+              </div>
+              <p id="tiling-note" class="microcopy">One hardware tile supports up to 16 × 16 × 16.</p>
+            </div>
+
+            <div class="validation-message" id="validation-message" role="status" aria-live="polite">Enter matching matrices to validate this job.</div>
+            <label class="reference-toggle"><input id="reference-toggle" type="checkbox" checked> Compare with a software reference</label>
+            <div class="input-actions">
+              <button id="clear-button" class="button button-quiet" type="button">Clear</button>
+              <button id="compute-button" class="button button-primary" type="button" disabled><span>Run on FPGA</span><span aria-hidden="true">↗</span></button>
+            </div>
+            <p class="local-note"><span aria-hidden="true">⌁</span> Values are sent to the configured local hardware bridge.</p>
+          </aside>
+
+          <section class="visual-column">
+            <section class="visual-panel panel">
+              <div class="panel-heading visual-heading">
+                <div>
+                  <p class="eyebrow">02 / DATAFLOW</p>
+                  <h2>Dual-engine fabric</h2>
+                </div>
+                <div class="visual-meta"><span>2 × 16 × 16 PE meshes</span><button id="reset-view-button" class="icon-button" type="button" aria-label="Reset 3D view" title="Reset view">↺</button></div>
+              </div>
+              <div class="engine-legend">
+                <span><i class="legend-swatch swatch-hybrid"></i>Engine 0 <b>HYBRID</b></span>
+                <span><i class="legend-swatch swatch-lut"></i>Engine 1 <b>LUT</b></span>
+                <span class="flow-key">A → east <b>·</b> B → south</span>
+              </div>
+              <div id="engine-status-list" class="engine-status-list" aria-live="polite"></div>
+              <div id="scene-wrap" class="scene-wrap">
+                <div id="three-scene" class="three-scene" role="img" aria-label="Interactive 3D illustration of two 16 by 16 systolic processing-element meshes"></div>
+                <div class="scene-overlay scene-overlay-top"><span class="scene-index">MESH / 01</span><strong>HYBRID MAC</strong></div>
+                <div class="scene-overlay scene-overlay-top scene-overlay-right"><span class="scene-index">MESH / 02</span><strong>LUT MAC</strong></div>
+                <div class="scene-overlay scene-overlay-bottom"><span class="axis-label">A</span><span>row input</span><span class="axis-line"></span><span class="axis-label axis-label-violet">B</span><span>column input</span><span class="telemetry-note">Illustrative flow · per-PE telemetry is unavailable</span></div>
+                <div id="scene-fallback" class="scene-fallback" hidden>Three.js visualization is unavailable in this browser.</div>
+              </div>
+              <div class="visual-foot"><span id="visual-operation"><i class="status-dot"></i>Hardware idle</span><span>Drag to orbit <b>·</b> Scroll to zoom</span></div>
+            </section>
+
+            <section class="result-panel panel" aria-labelledby="result-title">
+              <div class="panel-heading">
+                <div><p class="eyebrow">03 / OUTPUT</p><h2 id="result-title">Hardware result</h2></div>
+                <span id="result-state" class="result-state">Awaiting a hardware run</span>
+              </div>
+              <div id="result-placeholder" class="result-placeholder">
+                <span class="placeholder-glyph">C</span>
+                <div><strong>No result yet</strong><small>A completed bridge response will appear here.</small></div>
+              </div>
+              <div id="result-content" class="result-content" hidden>
+                <div class="result-matrix-wrap">
+                  <div class="result-caption"><span>FPGA OUTPUT</span><span id="result-shape">—</span></div>
+                  <div id="result-matrix" class="result-matrix"></div>
+                </div>
+                <div class="result-details">
+                  <div class="input-summary"><span>INPUT SHAPES</span><strong id="input-summary">—</strong></div>
+                  <div class="metric-grid">
+                    <div><span>STATUS</span><strong id="metric-status">—</strong></div>
+                    <div><span>TILES</span><strong id="metric-tiles">—</strong></div>
+                    <div><span>HW CYCLES</span><strong id="metric-cycles">—</strong></div>
+                    <div><span>TOTAL ELAPSED</span><strong id="metric-elapsed">—</strong></div>
+                  </div>
+                  <p id="overflow-note" class="overflow-note" hidden>Hardware reported an overflow flag.</p>
+                  <div id="reference-result" class="reference-result" hidden>
+                    <div class="reference-head"><span>SOFTWARE REFERENCE</span><strong id="reference-match">—</strong></div>
+                    <div id="reference-matrix" class="reference-matrix"></div>
+                    <small id="reference-diff"></small>
+                  </div>
+                  <p class="result-disclaimer">The FPGA result above is authoritative. Reference output is calculated in the browser and shown separately.</p>
+                </div>
+              </div>
+              <div id="request-error" class="request-error" role="alert" hidden></div>
+            </section>
+          </section>
+        </section>
+      </main>
+
+      <footer class="page-footer"><span>ADAPTIVE SYSTOLIC ARRAY <b>·</b> PYNQ-Z2</span><span>Hardware status comes from the bridge.</span></footer>
+    </div>
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

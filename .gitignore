@@ -13,6 +13,7 @@
 # ==========================
 *.synth
 *.bit
+!boards/pynq_z2/bitstream/*.bit
 *.bin
 *.mcs
 *.jic
@@ -20,6 +21,16 @@ db/
 incremental_db/
 output_files/
 greybox_tmp/
+
+# ==========================
+# Python Caches & Environments
+# ==========================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv*/
+venv/
+
 
 # ==========================
 # Vivado Simulation Work Output
